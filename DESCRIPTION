@@ -1,0 +1,13 @@
+Package: TSAIB
+Type: Package
+Title: Time Series Analysis and Intermission Bias
+Version: 0.1.0
+Author: Mathias Hoexbro Juel Vendt <vendyt@hotmail.com>
+Maintainer: Mathias Hoexbro Juel Vendt <vendyt@hotmail.com>
+Description: Estimates a model based on time series analysis, and accounts for 
+    intermission bias of satellite observations.
+    Input file type: NetCDF (Network Common Data Form).
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.2
