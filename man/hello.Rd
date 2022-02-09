@@ -20,5 +20,5 @@ Input file type: NetCDF (Network Common Data Form).
 \examples{
 hello("Stine and Karina")
 \dontrun{
-hello("Mathias Høxbro")}
+hello("Mathias")}
 }
