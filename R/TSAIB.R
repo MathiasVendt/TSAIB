@@ -10,9 +10,9 @@
 #' @export
 #'
 #' @examples
-#' hello("Stine and Karina")
+#' TSAIB("Stine and Karina")
 #' \dontrun{
-#' hello("Mathias")}
-hello <- function(x) {
+#' TSAIB("Mathias")}
+TSAIB <- function(x) {
   print(paste0("Hello ", x, ", this is my TSAIB R-package!"))
 }
