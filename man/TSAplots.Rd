@@ -4,21 +4,18 @@
 \alias{TSAplots}
 \title{Time Series Analysis Plots}
 \usage{
-TSAplots(x)
+TSAplots(TS, date)
 }
 \arguments{
-\item{x}{The time series for the TSAplots function}
+\item{TS}{The time series for the TSAplots function}
+
+\item{date}{}
 }
 \value{
-The output from \code{\link{print}}
+Plots from TSAplots
 }
 \description{
-Estimates a model based on time series analysis, and accounts for
-intermission bias of satellite observations.
-Input file type: NetCDF (Network Common Data Form).
-}
-\examples{
-TSAplots("Stine and Karina")
-\dontrun{
-TSAplots("Mathias")}
+Plots and saves the ACF and PACF for a pre-defined time series, with and without
+data transformations (log, sqrt), and differencing.
+Input type: Time series
 }

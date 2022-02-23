@@ -1,18 +1,15 @@
 #' @title Time Series Analysis Plots
 #'
-#' @description Estimates a model based on time series analysis, and accounts for
-#' intermission bias of satellite observations.
-#' Input file type: NetCDF (Network Common Data Form).
+#' @description Plots and saves the ACF and PACF for a pre-defined time series, with and without
+#' data transformations (log, sqrt), and differencing.
+#' Input type: Time series
 #'
-#' @param x The time series for the TSAplots function
+#' @param TS The time series for the TSAplots function
+#' @param date
 #'
-#' @return The output from \code{\link{print}}
+#' @return Plots from TSAplots
 #' @export
-#'
-#' @examples
-#' TSAplots("Stine and Karina")
-#' \dontrun{
-#' TSAplots("Mathias")}
-TSAplots <- function(x) {
-  print(paste0("Hello ", x, ", this is my TSAIB R-package!"))
+
+TSAplots <- function(TS,date) {
+  plot(date,TS)
 }
