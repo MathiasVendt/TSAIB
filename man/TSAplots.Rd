@@ -4,12 +4,14 @@
 \alias{TSAplots}
 \title{Time Series Analysis Plots}
 \usage{
-TSAplots(TS, date)
+TSAplots(TS, date, trans)
 }
 \arguments{
 \item{TS}{The time series for the TSAplots function}
 
-\item{date}{}
+\item{date}{The time axis in the time series (dates, seconds, intervals)}
+
+\item{trans}{data transform parameter: trans='log' for log transform, trans='sqrt' for sqrt transform, and trans='NONE' for no transform}
 }
 \value{
 Plots from TSAplots
