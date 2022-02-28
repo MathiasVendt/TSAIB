@@ -1,6 +1,6 @@
 #' @title ARIMA/SARIMA model builder
 #'
-#' @description Lists the top 5 estimated ARIMA/SARIMA models, based on specified parameter values and ranges
+#' @description Lists the top 5 estimated ARIMA/SARIMA models of the form: ARIMA(p,d,q)x(P,D,Q), based on specified parameter values and ranges
 #'
 #' @param TS The time series to build the models upon (remember to transform before using this function!)
 #' @param p The maximum AR value, estimated from plot analysis
@@ -27,11 +27,11 @@ for(pp in 0:p){
                 sigma2)+
           log(arima(TS,c(pp,d,qq),seasonal=list(order=c(PP,D,QQ),period=S))$
                 nobs)*(pp+qq+PP+QQ+d+D)
-        print(c(pp,qq,PP,QQ))
+        print(c(pp,d,qq,PP,D,QQ))
 
       }}}}
 # five lowest AIC (edited to BIC)
-arimalib_aic1=arimalib_aic[1:p+1,1:q+1,1:P+1,1:Q+1]
+arimalib_aic1=arimalib_aic[1:(p+1),1:(q+1),1:(P+1),1:(Q+1)]
 AIC1=c()
 
 order1_1=which(arimalib_aic1==min(arimalib_aic1),arr.ind = TRUE)-1
@@ -50,6 +50,7 @@ order1_5=which(arimalib_aic1==min(arimalib_aic1),arr.ind = TRUE)-1
 AIC1[5]=arimalib_aic1[which(arimalib_aic1==min(arimalib_aic1),arr.ind = TRUE)]
 BIC1=AIC1
 
-ORDERS=list("#1(p,q,P,Q)"=order1_1,"#2(p,q,P,Q)"=order1_2,"#3(p,q,P,Q)"=order1_3,"#4(p,q,P,Q)"=order1_4,"#5(p,q,P,Q)"=order1_5)
+ORDERS=list("#1(p,q,P,Q)"=order1_1,"AIC1"=AIC1[1],"#2(p,q,P,Q)"=order1_2,"AIC2"=AIC1[2],"#3(p,q,P,Q)"=order1_3,"AIC3"=AIC1[3],"#4(p,q,P,Q)"=order1_4,"AIC4"=AIC1[4],"#5(p,q,P,Q)"=order1_5,"AIC5"=AIC1[5])
+#ORDERS=list(order1_1,"AIC1"=AIC1[1],order1_2,"AIC2"=AIC1[2],order1_3,"AIC3"=AIC1[3],order1_4,"AIC4"=AIC1[4],order1_5,"AIC5"=AIC1[5])
 return(ORDERS)
 }

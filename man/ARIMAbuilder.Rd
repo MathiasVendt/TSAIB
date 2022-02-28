@@ -27,5 +27,5 @@ ARIMAbuilder(TS, p, d, q, P, D, Q, S)
 list of top 5 ARIMA/SARIMA models
 }
 \description{
-Lists the top 5 estimated ARIMA/SARIMA models, based on specified parameter values and ranges
+Lists the top 5 estimated ARIMA/SARIMA models of the form: ARIMA(p,d,q)x(P,D,Q), based on specified parameter values and ranges
 }
