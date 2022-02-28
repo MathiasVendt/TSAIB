@@ -27,5 +27,9 @@ centerTS=measurements[which(lat==coord[2]),which(lon==coord[1]),] # lat 75 har N
 # Extrating defined TS grid
 r=radius
   TSextract[1:(1+2*r),1:(1+2*r),]=measurements[which(lat==coord[2]-r/dlat):which(lat==coord[2]+r/dlat),which(lon==coord[1]-r/dlon):which(lon==coord[1]+r/dlon),]
+
+  GridTSExtract_LIST=list("longitude"=lon,"latitude"=lat,"date"=date,"measurements"=measurements,"TSmatrix"=TSextract)
+
+return(GridTSExtract_LIST)
 }
 
