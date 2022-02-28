@@ -9,15 +9,15 @@
 #' @param measurementsid The variable id for the measurements vector. e.g.: "sea_level_anomaly"
 #' @param coord The center coordinate for the TS grid area. e.g.: c(lon,lat) i.e. c(-165,75)
 #' @param radius The square radius of the TS grid. e.g: 0=1x1 grid, 1=3x3 grid, 2=5x5 grid etc.
-#' @param dlon Number of datapoints for each degree longitude
-#' @param dlat Number of datapoints for each degree latitude
+#' @param dlon Number of data points for each degree longitude
+#' @param dlat Number of data points for each degree latitude
 #'
 #' @return Time series from grid
 #' @export
 GridTSExtract <- function(nco,lonid,latid,timeid,measurementsid,coord,radius,dlon,dlat) {
-library(ncdf4) # package for netcdf manipulation
+library(ncdf4) # package for NetCDF manipulation
 
-lon =  ncvar_get(nco, varid = lonid) # extracting longtitude
+lon =  ncvar_get(nco, varid = lonid) # extracting longitude
 lat =  ncvar_get(nco, varid = latid) # extracting latitude
 date = ncvar_get(nco, varid = timeid)# extracting date
 measurements = ncvar_get(nco, varid = measurementsid) #extracting measurements
