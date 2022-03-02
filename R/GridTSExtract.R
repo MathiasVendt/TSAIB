@@ -16,7 +16,7 @@
 #' @export
 GridTSExtract <- function(nco,lonid,latid,timeid,measurementsid,coord,radius,dlon,dlat) {
 library(ncdf4) # package for NetCDF manipulation
-
+hej=1
 lon =  ncvar_get(nco, varid = lonid) # extracting longitude
 lat =  ncvar_get(nco, varid = latid) # extracting latitude
 date = ncvar_get(nco, varid = timeid)# extracting date
