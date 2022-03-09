@@ -4,10 +4,12 @@
 \alias{TSdiagnostics}
 \title{Time series diagnostics}
 \usage{
-TSdiagnostics(TS)
+TSdiagnostics(TS, nanrem = "FALSE")
 }
 \arguments{
 \item{TS}{The time series to be analyzed}
+
+\item{nanrem}{Set NaN to be removed or not. e.g.: nanrem="TRUE"}
 }
 \value{
 Basic statistics and characteristics
