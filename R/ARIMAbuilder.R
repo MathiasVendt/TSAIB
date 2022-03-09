@@ -13,9 +13,9 @@
 #' @return list of top 5 ARIMA/SARIMA models
 #' @export
 
-ARIMAbuilder <- function(TS,p,d,q,P,D,Q,S) {
+ARIMAbuilder <- function(TS,p=1,d=1,q=1,P=1,D=1,Q=1,S=12) {
 
-# build ARIMA(p,1,q)x(P,1,Q)_7 library: max 1,8,1,1
+# build ARIMA(p,d,q)x(P,D,Q)_S library:
 arimalib_aic=array(dim=c(p+2,q+2,P+2,Q+2))
 for(pp in 0:p){
   for(qq in 0:q){

@@ -4,7 +4,7 @@
 \alias{TSAplots}
 \title{Time Series Analysis Plots}
 \usage{
-TSAplots(TS, date, trans)
+TSAplots(TS, date, trans = "NONE", saveas = "NONE")
 }
 \arguments{
 \item{TS}{The time series for the TSAplots function}
@@ -12,6 +12,8 @@ TSAplots(TS, date, trans)
 \item{date}{The time axis in the time series (dates, seconds, intervals)}
 
 \item{trans}{data transform parameter: trans='log' for log transform, trans='sqrt' for sqrt transform, and trans='NONE' for no transform}
+
+\item{saveas}{specifies the file format to save the plots in the current working directory. Possible formats is: PDF, JPEG, TIFF, BMP and PNG. e.g.: "pdf" or "jpeg". If none is specified, it will not save the plots}
 }
 \value{
 Plots from TSAplots
