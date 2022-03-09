@@ -6,14 +6,14 @@
 \usage{
 GridTSExtract(
   nco,
-  lonid,
-  latid,
-  timeid,
-  measurementsid,
-  coord,
-  radius,
-  dlon,
-  dlat
+  lonid = "longitude",
+  latid = "latitude",
+  timeid = "date",
+  measurementsid = "sea_level_anomaly",
+  coord = c(-165, 74),
+  radius = 0,
+  dlon = 2,
+  dlat = 4
 )
 }
 \arguments{
@@ -27,13 +27,13 @@ GridTSExtract(
 
 \item{measurementsid}{The variable id for the measurements vector. e.g.: "sea_level_anomaly"}
 
-\item{coord}{The center coordinate for the TS grid area. e.g.: c(lon,lat) i.e. c(-165,75)}
+\item{coord}{The center coordinate for the TS grid area. e.g.: c(lon,lat) i.e. c(-164,74)}
 
 \item{radius}{The square radius of the TS grid. e.g: 0=1x1 grid, 1=3x3 grid, 2=5x5 grid etc.}
 
-\item{dlon}{Number of datapoints for each degree longitude}
+\item{dlon}{Number of data points for each degree longitude}
 
-\item{dlat}{Number of datapoints for each degree latitude}
+\item{dlat}{Number of data points for each degree latitude}
 }
 \value{
 Time series from grid
