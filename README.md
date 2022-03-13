@@ -84,6 +84,37 @@ TSdiagnostics
 #  nanrem: Set NaN to be removed or not. e.g.: nanrem="TRUE"
 ```
 
+``` r
+TSnanrem
+#?TSnanrem
+# Description
+#  Removes or imputes NaN from the time series data set, with a specified method of choice
+# Usage
+#  TSnanrem(TS, method = "mean", value_nr = 0)
+# Arguments
+#  TS: The time series to remove NaN from
+#  method: The imputation method. e.g.: "omit", "mean", "median" or "value"
+#  value_nr: The specific value for the "value" imputing method. e.g.: value_nr=0
+```
+
+``` r
+TSAplots
+#?TSAplots
+# Description
+#  Plots and saves the ACF and PACF for a pre-defined time series, with and without data 
+#  transformations (log, sqrt), and differencing. Input type: Time series
+# Usage
+#  TSAplots(TS, date, trans = "NONE", saveas = "NONE")
+# Arguments
+#  TS: The time series for the TSAplots function
+#  date: The time axis in the time series (dates, seconds, intervals)
+#  trans: data transform parameter: trans='log' for log transform, trans='sqrt' for sqrt 
+#  transform, and trans='NONE' for no transform
+#  saveas: specifies the file format to save the plots in the current working directory. Possible
+#  formats is: PDF, JPEG, TIFF, BMP and PNG. e.g.: "pdf" or "jpeg". If none is specified, it will
+#  not save the plots
+```
+
 ## Example
 
 This is a basic example which shows you how to solve a common problem:
@@ -95,7 +126,6 @@ library(TSAIB)
 #TSdata=GridTSExtract(nco,"longitude","latitude","date","sea_level_anomaly",c(-165,74),1,2,4)
 
 ## TSdiagnostics can be used to gather simple statistics about the data
-
 TSdiagnostics(TSdata$TSmatrix,nanrem="TRUE") #analyze extracted dataset, and remove NaN
 #> `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 #> Warning: Removed 4 rows containing non-finite values (stat_bin).
@@ -134,6 +164,15 @@ TSdiagnostics(TSdata$TSmatrix,nanrem="TRUE") #analyze extracted dataset, and rem
     #> sample estimates:
     #>    mean of x 
     #> -0.005382746
+
+    ## Based on the output from TSdiagnostics, NaNs may be dealt with using TSnanrem:
+    TS_default=TSnanrem(TSdata$TSmatrix[3,3,])# replaces NaN by mean, as default
+
+    ## With the NaN's taken care of, a set of time series analysis plots is made with TSAplots
+    TSAplots(TS_default,TSdata$date)
+    #> Warning in 1:end(date): numerical expression has 2 elements: only the first used
+
+<img src="man/figures/README-example-2.png" width="100%" />
 
 What is special about using `README.Rmd` instead of just `README.md`?
 You can include R chunks like so:
