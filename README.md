@@ -25,45 +25,101 @@ This is a basic example which shows you how to solve a common problem:
 ``` r
 library(TSAIB)
 ## Initially extract the wanted time series data from your NetCDF object (nco) using GridTSExtract:
-# TSdata=GridTSExtract(nco,"longitude","latitude","date","sea_level_anomaly",c(-165,74),1,2,4)
-## See documentation for the data:
-?TSdata
-#> starting httpd help server ... done
+#?GridTSExtract
+# Description
+#  Extracts a time series from a NetCDF lon&lat coordinate grid
+# Usage
+#GridTSExtract(
+#  nco,
+#  lonid = "longitude",
+#  latid = "latitude",
+#  timeid = "date",
+#  measurementsid = "sea_level_anomaly",
+#  coord = c(-165, 74),
+#  radius = 0,
+#  dlon = 2,
+#  dlat = 4
+#)
+# Arguments
+#  nco: The NetCDF object (open with "nc_open" from the "ncdf4" library)
+#  lonid: The variable id for longitude vector. e.g.: "longitude"
+#  latid: The variable id for latitude vector. e.g.: "latitude"
+#  timeid: The variable id for the time vector. e.g.: "date"
+#  measurementsid: The variable id for the measurements vector. e.g.: "sea_level_anomaly"
+#  coord: The center coordinate for the TS grid area. e.g.: c(lon,lat) i.e. c(-164,74)
+#  radius: The square radius of the TS grid. e.g: 0=1x1 grid, 1=3x3 grid, 2=5x5 grid etc.
+#  dlon: Number of data points for each degree longitude
+#  dlat:Number of data points for each degree latitude
 
-TSdiagnostics(TSdata$TSmatrix[2,2,])
+#TSdata=GridTSExtract(nco,"longitude","latitude","date","sea_level_anomaly",c(-165,74),1,2,4)
+
+## See documentation for the data:
+#?TSdata
+# Description
+#  An extracted list using the "GridTSExtract" function, from the data set:
+#  Rose, S.K.; Andersen, O.B.; Passaro, M.; Ludwigsen, C.A.; Schwatke, 
+#  C. Arctic Ocean Sea Level Record from the Complete Radar 
+#  Altimetry Era: 1991�2018. Remote Sens. 2019, 11, 1672. 
+#  https://www.mdpi.com/2072-4292/11/14/1672"
+# Usage
+#  TSdata
+# Format
+#  A large list containing 5 elements, which are:
+#  longitude: containing longitudes from -180:180, by increments of 0.5 degrees (length: 720)
+#  latitude: containing latitudes from 65:81.5, by increments of 0.25 degrees (length: 67)
+#  date: containing years from 1991:2019, by increments of 1/12 (length:325)
+#  measurements: containing sea_level_anomaly measurements for each increments of: 
+#  longitude, latitude and date. (dimension: [67,720,325])
+#  TSmatrix: containing a 3x3x325 grid of measurements centered around (lon,lat)=(-165,74)
+
+## TSdiagnostics can be used to gather simple statistics about the data
+#?TSdiagnostics
+# Description
+#  Shows basic statistics and characteristics of the time series data
+# Usage
+#  TSdiagnostics(TS, nanrem = "FALSE")
+# Arguments
+#  TS:The time series to be analyzed
+#  nanrem: Set NaN to be removed or not. e.g.: nanrem="TRUE"
+
+TSdiagnostics(TSdata$TSmatrix,nanrem="TRUE") #analyze extracted dataset, and remove NaN
 #> `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+#> Warning: Removed 4 rows containing non-finite values (stat_bin).
+#> Warning: Removed 4 rows containing non-finite values (stat_boxplot).
+#> Warning: Removed 4 rows containing non-finite values (stat_density).
+#> Warning: Removed 4 rows containing missing values (geom_point).
 ```
 
 <img src="man/figures/README-example-1.png" width="100%" />
 
     #> Number of NaN's in the data set
-    #> [1] 0
+    #> [1] 4
     #> Number of objects in the data set
-    #> [1] 325
+    #> [1] 2925
     #> Fraction of the data set which is NaN's
-    #> [1] 0
+    #> [1] 0.001367521
     #> mean
-    #> [1] -0.005424615
+    #> [1] -0.005382746
     #> standard deviation
-    #> [1] 0.06689967
+    #> [1] 0.06690633
     #> median
     #> [1] -0.011
     #> quantile
     #>     0%    25%    50%    75%   100% 
-    #> -0.215 -0.045 -0.011  0.038  0.176 
+    #> -0.224 -0.046 -0.011  0.040  0.185 
     #> sum
-    #> [1] -1.763
+    #> [1] -15.723
     #> 
     #>  One Sample t-test
     #> 
     #> data:  TS
-    #> t = -1.4618, df = 324, p-value = 0.1448
+    #> t = -4.3481, df = 2920, p-value = 1.42e-05
     #> alternative hypothesis: true mean is not equal to 0
     #> 95 percent confidence interval:
-    #>  -0.012725168  0.001875937
+    #>  -0.007810080 -0.002955411
     #> sample estimates:
     #>    mean of x 
-    #> -0.005424615
+    #> -0.005382746
 
 What is special about using `README.Rmd` instead of just `README.md`?
 You can include R chunks like so:
