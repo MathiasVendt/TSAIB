@@ -115,6 +115,25 @@ TSAplots
 #  not save the plots
 ```
 
+``` r
+ARIMAbuilder
+#?ARIMAbuilder
+# Description
+#  Lists the top 5 estimated ARIMA/SARIMA models of the form: ARIMA(p,d,q)x(P,D,Q), based on 
+#  specified parameter values and ranges
+# Usage
+#  ARIMAbuilder(TS, p = 1, d = 1, q = 1, P = 1, D = 1, Q = 1, S = 12)
+# Arguments
+#  TS: The time series to build the models upon (remember to transform before using this function!)
+#  p: The maximum AR value, estimated from plot analysis
+#  d: The fixed differencing, often 0, 1 or 2
+#  q:   The maximum MA value, estimated from plot analysis
+#  P:   The maximum seasonal AR value, estimated from plot analysis
+#  D:   The fixed seasonal differencing, often 0, 1 or 2
+#  Q:   The mazimum seasonal MA value, estimated from plot analysis
+#  S:   The seasonality/period of the seasonal differencing
+```
+
 ## Example
 
 This is a basic example which shows you how to solve a common problem:
@@ -173,6 +192,127 @@ TSdiagnostics(TSdata$TSmatrix,nanrem="TRUE") #analyze extracted dataset, and rem
     #> Warning in 1:end(date): numerical expression has 2 elements: only the first used
 
 <img src="man/figures/README-example-2.png" width="100%" />
+
+``` r
+## Based on the TSA plots, an Arima(p,d,q)x(P,D,Q) model can be estimated
+MODELS=ARIMAbuilder(TSdata$TSmatrix[2,2,],2,1,3,1,1,2,12)
+#> [1] 0 1 0 0 1 0
+#> [1] 0 1 0 0 1 1
+#> [1] 0 1 0 0 1 2
+#> [1] 0 1 0 1 1 0
+#> [1] 0 1 0 1 1 1
+#> [1] 0 1 0 1 1 2
+#> [1] 0 1 1 0 1 0
+#> [1] 0 1 1 0 1 1
+#> [1] 0 1 1 0 1 2
+#> [1] 0 1 1 1 1 0
+#> [1] 0 1 1 1 1 1
+#> Warning in log(s2): NaNs produced
+#> Warning in log(s2): NaNs produced
+
+#> Warning in log(s2): NaNs produced
+#> [1] 0 1 1 1 1 2
+#> [1] 0 1 2 0 1 0
+#> [1] 0 1 2 0 1 1
+#> [1] 0 1 2 0 1 2
+#> [1] 0 1 2 1 1 0
+#> [1] 0 1 2 1 1 1
+#> Warning in log(s2): NaNs produced
+
+#> Warning in log(s2): NaNs produced
+
+#> Warning in log(s2): NaNs produced
+#> [1] 0 1 2 1 1 2
+#> [1] 0 1 3 0 1 0
+#> [1] 0 1 3 0 1 1
+#> [1] 0 1 3 0 1 2
+#> [1] 0 1 3 1 1 0
+#> [1] 0 1 3 1 1 1
+#> [1] 0 1 3 1 1 2
+#> [1] 1 1 0 0 1 0
+#> [1] 1 1 0 0 1 1
+#> [1] 1 1 0 0 1 2
+#> [1] 1 1 0 1 1 0
+#> [1] 1 1 0 1 1 1
+#> [1] 1 1 0 1 1 2
+#> [1] 1 1 1 0 1 0
+#> [1] 1 1 1 0 1 1
+#> [1] 1 1 1 0 1 2
+#> [1] 1 1 1 1 1 0
+#> [1] 1 1 1 1 1 1
+#> [1] 1 1 1 1 1 2
+#> [1] 1 1 2 0 1 0
+#> [1] 1 1 2 0 1 1
+#> [1] 1 1 2 0 1 2
+#> [1] 1 1 2 1 1 0
+#> [1] 1 1 2 1 1 1
+#> [1] 1 1 2 1 1 2
+#> [1] 1 1 3 0 1 0
+#> [1] 1 1 3 0 1 1
+#> [1] 1 1 3 0 1 2
+#> [1] 1 1 3 1 1 0
+#> [1] 1 1 3 1 1 1
+#> [1] 1 1 3 1 1 2
+#> [1] 2 1 0 0 1 0
+#> [1] 2 1 0 0 1 1
+#> [1] 2 1 0 0 1 2
+#> [1] 2 1 0 1 1 0
+#> [1] 2 1 0 1 1 1
+#> [1] 2 1 0 1 1 2
+#> [1] 2 1 1 0 1 0
+#> [1] 2 1 1 0 1 1
+#> [1] 2 1 1 0 1 2
+#> [1] 2 1 1 1 1 0
+#> [1] 2 1 1 1 1 1
+#> [1] 2 1 1 1 1 2
+#> [1] 2 1 2 0 1 0
+#> [1] 2 1 2 0 1 1
+#> [1] 2 1 2 0 1 2
+#> [1] 2 1 2 1 1 0
+#> [1] 2 1 2 1 1 1
+#> [1] 2 1 2 1 1 2
+#> [1] 2 1 3 0 1 0
+#> [1] 2 1 3 0 1 1
+#> [1] 2 1 3 0 1 2
+#> [1] 2 1 3 1 1 0
+#> [1] 2 1 3 1 1 1
+#> [1] 2 1 3 1 1 2
+print(MODELS)
+#> $`#1(p,q,P,Q)`
+#>      dim1 dim2 dim3 dim4
+#> [1,]    1    1    1    2
+#> 
+#> $AIC1
+#> [1] -1732.342
+#> 
+#> $`#2(p,q,P,Q)`
+#>      dim1 dim2 dim3 dim4
+#> [1,]    2    1    1    2
+#> 
+#> $AIC2
+#> [1] -1727.312
+#> 
+#> $`#3(p,q,P,Q)`
+#>      dim1 dim2 dim3 dim4
+#> [1,]    1    2    1    2
+#> 
+#> $AIC3
+#> [1] -1727.245
+#> 
+#> $`#4(p,q,P,Q)`
+#>      dim1 dim2 dim3 dim4
+#> [1,]    0    2    1    2
+#> 
+#> $AIC4
+#> [1] -1727.18
+#> 
+#> $`#5(p,q,P,Q)`
+#>      dim1 dim2 dim3 dim4
+#> [1,]    1    1    1    1
+#> 
+#> $AIC5
+#> [1] -1726.777
+```
 
 What is special about using `README.Rmd` instead of just `README.md`?
 You can include R chunks like so:

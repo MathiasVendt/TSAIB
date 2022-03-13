@@ -120,9 +120,25 @@ TSAplots
 #  saveas: specifies the file format to save the plots in the current working directory. Possible
 #  formats is: PDF, JPEG, TIFF, BMP and PNG. e.g.: "pdf" or "jpeg". If none is specified, it will
 #  not save the plots
-
 ``` 
-
+``` r 
+ARIMAbuilder
+#?ARIMAbuilder
+# Description
+#  Lists the top 5 estimated ARIMA/SARIMA models of the form: ARIMA(p,d,q)x(P,D,Q), based on 
+#  specified parameter values and ranges
+# Usage
+#  ARIMAbuilder(TS, p = 1, d = 1, q = 1, P = 1, D = 1, Q = 1, S = 12)
+# Arguments
+#  TS: The time series to build the models upon (remember to transform before using this function!)
+#  p: The maximum AR value, estimated from plot analysis
+#  d: The fixed differencing, often 0, 1 or 2
+#  q:	The maximum MA value, estimated from plot analysis
+#  P:	The maximum seasonal AR value, estimated from plot analysis
+#  D:	The fixed seasonal differencing, often 0, 1 or 2
+#  Q:	The mazimum seasonal MA value, estimated from plot analysis
+#  S:	The seasonality/period of the seasonal differencing
+``` 
 
 
 
@@ -145,6 +161,9 @@ TS_default=TSnanrem(TSdata$TSmatrix[3,3,])# replaces NaN by mean, as default
 ## With the NaN's taken care of, a set of time series analysis plots is made with TSAplots
 TSAplots(TS_default,TSdata$date)
 
+## Based on the TSA plots, an Arima(p,d,q)x(P,D,Q) model can be estimated
+MODELS=ARIMAbuilder(TSdata$TSmatrix[2,2,],2,1,3,1,1,2,12)
+print(MODELS)
 
 ```
 
