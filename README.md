@@ -25,7 +25,7 @@ This is a basic example which shows you how to solve a common problem:
 ``` r
 library(TSAIB)
 ## basic example code
-plot(1:10,1:10)
+plot(1:14,1:14)
 ```
 
 <img src="man/figures/README-example-1.png" width="100%" />
