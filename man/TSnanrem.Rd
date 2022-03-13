@@ -2,32 +2,20 @@
 % Please edit documentation in R/TSnanrem.R
 \name{TSnanrem}
 \alias{TSnanrem}
-\title{Time series NaN remover}
+\title{Time series NaN remover/replacer}
 \usage{
-TSnanrem()
+TSnanrem(TS, method = "mean", value_nr = 0)
 }
 \arguments{
-\item{nco}{The NetCDF object (open with "nc_open" from the "ncdf4" library)}
+\item{TS}{The time series to remove NaN from}
 
-\item{lonid}{The variable id for longitude vector. e.g.: "longitude"}
+\item{method}{The imputation method. e.g.: "omit", "mean", "median" or "value"}
 
-\item{latid}{The variable id for latitude vector. e.g.: "latitude"}
-
-\item{timeid}{The variable id for the time vector. e.g.: "date"}
-
-\item{measurementsid}{The variable id for the measurements vector. e.g.: "sea_level_anomaly"}
-
-\item{coord}{The center coordinate for the TS grid area. e.g.: c(lon,lat) i.e. c(-164,74)}
-
-\item{radius}{The square radius of the TS grid. e.g: 0=1x1 grid, 1=3x3 grid, 2=5x5 grid etc.}
-
-\item{dlon}{Number of data points for each degree longitude}
-
-\item{dlat}{Number of data points for each degree latitude}
+\item{value_nr}{The specific value for the "value" imputing method. e.g.: value_nr=0}
 }
 \value{
-Time series from grid
+Time series with NaNs removed or replaced
 }
 \description{
-Removes NaN from the time series data set, with a specified method of choice
+Removes or imputes NaN from the time series data set, with a specified method of choice
 }
