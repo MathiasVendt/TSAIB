@@ -37,7 +37,8 @@ This is a basic example which shows you how to solve a common problem:
 ```{r example}
 library(TSAIB)
 ## basic example code
-plot(1:14,1:14)
+TSdiagnostics(TSdata$TSmatrix[2,2,])
+
 ```
 
 What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:

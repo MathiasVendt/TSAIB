@@ -25,10 +25,40 @@ This is a basic example which shows you how to solve a common problem:
 ``` r
 library(TSAIB)
 ## basic example code
-plot(1:14,1:14)
+TSdiagnostics(TSdata$TSmatrix[2,2,])
+#> `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ```
 
 <img src="man/figures/README-example-1.png" width="100%" />
+
+    #> Number of NaN's in the data set
+    #> [1] 0
+    #> Number of objects in the data set
+    #> [1] 325
+    #> Fraction of the data set which is NaN's
+    #> [1] 0
+    #> mean
+    #> [1] -0.005424615
+    #> standard deviation
+    #> [1] 0.06689967
+    #> median
+    #> [1] -0.011
+    #> quantile
+    #>     0%    25%    50%    75%   100% 
+    #> -0.215 -0.045 -0.011  0.038  0.176 
+    #> sum
+    #> [1] -1.763
+    #> 
+    #>  One Sample t-test
+    #> 
+    #> data:  TS
+    #> t = -1.4618, df = 324, p-value = 0.1448
+    #> alternative hypothesis: true mean is not equal to 0
+    #> 95 percent confidence interval:
+    #>  -0.012725168  0.001875937
+    #> sample estimates:
+    #>    mean of x 
+    #> -0.005424615
 
 What is special about using `README.Rmd` instead of just `README.md`?
 You can include R chunks like so:
