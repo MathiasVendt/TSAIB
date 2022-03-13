@@ -24,7 +24,12 @@ This is a basic example which shows you how to solve a common problem:
 
 ``` r
 library(TSAIB)
-## basic example code
+## Initially extract the wanted time series data from your NetCDF object (nco) using GridTSExtract:
+# TSdata=GridTSExtract(nco,"longitude","latitude","date","sea_level_anomaly",c(-165,74),1,2,4)
+## See documentation for the data:
+?TSdata
+#> starting httpd help server ... done
+
 TSdiagnostics(TSdata$TSmatrix[2,2,])
 #> `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ```
