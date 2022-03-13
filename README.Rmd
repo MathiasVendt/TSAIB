@@ -29,14 +29,9 @@ You can install the development version of TSAIB like so:
 ``` r
 # FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
 ```
-
-## Example
-
-This is a basic example which shows you how to solve a common problem:
-
-```{r example}
-library(TSAIB)
-## Initially extract the wanted time series data from your NetCDF object (nco) using GridTSExtract:
+## Functions
+``` r 
+GridTSExtract
 #?GridTSExtract
 # Description
 #  Extracts a time series from a NetCDF lon&lat coordinate grid
@@ -62,6 +57,29 @@ library(TSAIB)
 #  radius: The square radius of the TS grid. e.g: 0=1x1 grid, 1=3x3 grid, 2=5x5 grid etc.
 #  dlon: Number of data points for each degree longitude
 #  dlat:Number of data points for each degree latitude
+```
+``` r 
+TSdiagnostics
+#?TSdiagnostics
+# Description
+#  Shows basic statistics and characteristics of the time series data
+# Usage
+#  TSdiagnostics(TS, nanrem = "FALSE")
+# Arguments
+#  TS:The time series to be analyzed
+#  nanrem: Set NaN to be removed or not. e.g.: nanrem="TRUE"
+
+``` 
+
+
+
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+```{r example}
+library(TSAIB)
+## Initially extract the wanted time series data from your NetCDF object (nco) using GridTSExtract:
 
 #TSdata=GridTSExtract(nco,"longitude","latitude","date","sea_level_anomaly",c(-165,74),1,2,4)
 
@@ -85,14 +103,6 @@ library(TSAIB)
 #  TSmatrix: containing a 3x3x325 grid of measurements centered around (lon,lat)=(-165,74)
 
 ## TSdiagnostics can be used to gather simple statistics about the data
-#?TSdiagnostics
-# Description
-#  Shows basic statistics and characteristics of the time series data
-# Usage
-#  TSdiagnostics(TS, nanrem = "FALSE")
-# Arguments
-#  TS:The time series to be analyzed
-#  nanrem: Set NaN to be removed or not. e.g.: nanrem="TRUE"
 
 TSdiagnostics(TSdata$TSmatrix,nanrem="TRUE") #analyze extracted dataset, and remove NaN
 
