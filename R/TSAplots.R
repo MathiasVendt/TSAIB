@@ -27,7 +27,7 @@ TSAplots <- function(TS,date,trans="NONE",saveas="NONE") {
     par(mfrow = c(4,2))}
   plot(date,TS,main='The raw time series',
        xlab='Date',ylab='Measurements')
-  plot(date[1:end(date)-1],diff(TS),main='The differenced (once) time series',
+  plot(date[1:end(date)[1]-1],diff(TS),main='The differenced (once) time series',
        xlab='Date',ylab='Measurements')
   if(trans=="log"){
   plot(date,log(TS),main='The log-transformed time series',
@@ -64,7 +64,7 @@ TSAplots <- function(TS,date,trans="NONE",saveas="NONE") {
       par(mfrow = c(4,2))}
     plot(date,TS,main='The raw time series',
          xlab='Date',ylab='Measurements')
-    plot(date[1:end(date)-1],diff(TS),main='The differenced (once) time series',
+    plot(date[1:end(date)[1]-1],diff(TS),main='The differenced (once) time series',
          xlab='Date',ylab='Measurements')
     if(trans=="log"){
       plot(date,log(TS),main='The log-transformed time series',
@@ -101,7 +101,7 @@ TSAplots <- function(TS,date,trans="NONE",saveas="NONE") {
       par(mfrow = c(4,2))}
     plot(date,TS,main='The raw time series',
          xlab='Date',ylab='Measurements')
-    plot(date[1:end(date)-1],diff(TS),main='The differenced (once) time series',
+    plot(date[1:end(date)[1]-1],diff(TS),main='The differenced (once) time series',
          xlab='Date',ylab='Measurements')
     if(trans=="log"){
       plot(date,log(TS),main='The log-transformed time series',
@@ -177,7 +177,7 @@ TSAplots <- function(TS,date,trans="NONE",saveas="NONE") {
       par(mfrow = c(4,2))}
     plot(date,TS,main='The raw time series',
          xlab='Date',ylab='Measurements')
-    plot(date[1:end(date)-1],diff(TS),main='The differenced (once) time series',
+    plot(date[1:end(date)[1]-1],diff(TS),main='The differenced (once) time series',
          xlab='Date',ylab='Measurements')
     if(trans=="log"){
       plot(date,log(TS),main='The log-transformed time series',
@@ -212,7 +212,7 @@ TSAplots <- function(TS,date,trans="NONE",saveas="NONE") {
       par(mfrow = c(4,2))}
     plot(date,TS,main='The raw time series',
          xlab='Date',ylab='Measurements')
-    plot(date[1:end(date)-1],diff(TS),main='The differenced (once) time series',
+    plot(date[1:end(date)[1]-1],diff(TS),main='The differenced (once) time series',
          xlab='Date',ylab='Measurements')
     if(trans=="log"){
       plot(date,log(TS),main='The log-transformed time series',
