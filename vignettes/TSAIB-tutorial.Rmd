@@ -1,10 +1,15 @@
 ---
-title: "TSAIB-tutorial"
-output: rmarkdown::html_vignette
+title: "TSAIB tutorial"
+author: "Mathias Høxbro Juel Vendt"
+date: "`r Sys.Date()`"
+output: 
+  pdf_document:
+    toc: true
+    toc_depth: 2
 vignette: >
-  %\VignetteIndexEntry{TSAIB-tutorial}
+  %\VignetteIndexEntry{Put the title of your vignette here}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+  \usepackage[utf8]{inputenc}
 ---
 
 ```{r, include = FALSE}
