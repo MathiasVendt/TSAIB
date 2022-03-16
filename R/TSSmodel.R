@@ -34,7 +34,7 @@ theta_hat=solve(t(x_train)%*%x_train)%*%t(x_train)%*%Y_train
 
 # now we plot the model to see if it's reasonable
 yhat=x_train%*%theta_hat
-plot(yhat)
+#plot(yhat)
 
 # now we determine estimator of the variance sigma_hat (3.44 in Madsen)
 # since this is unweighted, the Sigma is the identity matrix, hence:
@@ -55,7 +55,7 @@ for(i in 1:testsize){
   yhat_pred[i]=x_test[i,]%*%theta_hat
 }
 yhat_wpred=c(yhat,yhat_pred)
-plot(yhat_wpred)
+#plot(yhat_wpred)
 # and variance of prediction error
 
 Var_pred=var(Y_test-yhat_pred)
@@ -87,7 +87,7 @@ lines(date[1:length(TS)],pred_up_full,col="blue")
 lines(date[1:length(TS)],pred_low_full,col="blue")
 lines(date[(end(TS)[1]-testsize+1):end(TS)[1]],pred_up,col="green")
 lines(date[(end(TS)[1]-testsize+1):end(TS)[1]],pred_low,col="green")
-legend(date[end(TS)[1]-length(TS)/5],-0.1, legend=c("Measurements", "Predicted","Confidence interval","Prediction interval"),
+legend(date[end(TS)[1]-length(TS)/3.8],-0.1, legend=c("Measurements", "Predicted","Confidence int,","Prediction int."),
        col=c("black", "red","blue","green"), lty=c(1,1,1), cex=0.8)
 
 print("Parameter estimates:")
