@@ -90,6 +90,7 @@ lines(date[(end(TS)[1]-testsize+1):end(TS)[1]],pred_low,col="green")
 legend(date[end(TS)[1]-length(TS)/3.8],-0.1, legend=c("Measurements", "Predicted","Confidence int,","Prediction int."),
        col=c("black", "red","blue","green"), lty=c(1,1,1), cex=0.8)
 
+
 print("Parameter estimates:")
 print("alpha")
 print(theta_hat[1])
