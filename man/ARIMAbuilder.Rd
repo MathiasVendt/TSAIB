@@ -4,10 +4,12 @@
 \alias{ARIMAbuilder}
 \title{ARIMA/SARIMA model builder}
 \usage{
-ARIMAbuilder(TS, p = 1, d = 1, q = 1, P = 1, D = 1, Q = 1, S = 12)
+ARIMAbuilder(TS, date, p = 1, d = 1, q = 1, P = 1, D = 1, Q = 1, S = 12)
 }
 \arguments{
 \item{TS}{The time series to build the models upon (remember to transform before using this function!)}
+
+\item{date}{The date vector}
 
 \item{p}{The maximum AR value, estimated from plot analysis}
 

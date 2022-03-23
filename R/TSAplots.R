@@ -20,11 +20,11 @@ TSAplots <- function(TS,date,trans="NONE",saveas="NONE") {
   pdf("TSAplots.pdf")
   # 2. Create the plots
   if(trans=="NONE"){
-    par(mfrow = c(3,2))}
+    par(mfrow = c(3,2),mar=c(2,2,2,2))}
   if(trans=="log"){
-    par(mfrow = c(4,2))}
+    par(mfrow = c(4,2),mar=c(2,2,2,2))}
   if(trans=="sqrt"){
-    par(mfrow = c(4,2))}
+    par(mfrow = c(4,2),mar=c(2,2,2,2))}
   plot(date,TS,main='The raw time series',
        xlab='Date',ylab='Measurements')
   plot(date[1:end(date)[1]-1],diff(TS),main='The differenced (once) time series',
@@ -57,11 +57,11 @@ TSAplots <- function(TS,date,trans="NONE",saveas="NONE") {
     jpeg("TSAplots.jpg")
     # 2. Create the plots
     if(trans=="NONE"){
-      par(mfrow = c(3,2))}
+      par(mfrow = c(3,2),mar=c(2,2,2,2))}
     if(trans=="log"){
-      par(mfrow = c(4,2))}
+      par(mfrow = c(4,2),mar=c(2,2,2,2))}
     if(trans=="sqrt"){
-      par(mfrow = c(4,2))}
+      par(mfrow = c(4,2),mar=c(2,2,2,2))}
     plot(date,TS,main='The raw time series',
          xlab='Date',ylab='Measurements')
     plot(date[1:end(date)[1]-1],diff(TS),main='The differenced (once) time series',
@@ -94,11 +94,11 @@ TSAplots <- function(TS,date,trans="NONE",saveas="NONE") {
     tiff("TSAplots.tiff")
     # 2. Create the plots
     if(trans=="NONE"){
-      par(mfrow = c(3,2))}
+      par(mfrow = c(3,2),mar=c(2,2,2,2))}
     if(trans=="log"){
-      par(mfrow = c(4,2))}
+      par(mfrow = c(4,2),mar=c(2,2,2,2))}
     if(trans=="sqrt"){
-      par(mfrow = c(4,2))}
+      par(mfrow = c(4,2),mar=c(2,2,2,2))}
     plot(date,TS,main='The raw time series',
          xlab='Date',ylab='Measurements')
     plot(date[1:end(date)[1]-1],diff(TS),main='The differenced (once) time series',
@@ -132,11 +132,11 @@ TSAplots <- function(TS,date,trans="NONE",saveas="NONE") {
     bmp("TSAplots.bmp")
     # 2. Create the plots
     if(trans=="NONE"){
-      par(mfrow = c(3,2))}
+      par(mfrow = c(3,2),mar=c(2,2,2,2))}
     if(trans=="log"){
-      par(mfrow = c(4,2))}
+      par(mfrow = c(4,2),mar=c(2,2,2,2))}
     if(trans=="sqrt"){
-      par(mfrow = c(4,2))}
+      par(mfrow = c(4,2),mar=c(2,2,2,2))}
     plot(date,TS,main='The raw time series',
          xlab='Date',ylab='Measurements')
     plot(date[1:end(date)-1],diff(TS),main='The differenced (once) time series',
@@ -170,11 +170,11 @@ TSAplots <- function(TS,date,trans="NONE",saveas="NONE") {
     png("TSAplots.png")
     # 2. Create the plots
     if(trans=="NONE"){
-      par(mfrow = c(3,2))}
+      par(mfrow = c(3,2),mar=c(2,2,2,2))}
     if(trans=="log"){
-      par(mfrow = c(4,2))}
+      par(mfrow = c(4,2),mar=c(2,2,2,2))}
     if(trans=="sqrt"){
-      par(mfrow = c(4,2))}
+      par(mfrow = c(4,2),mar=c(2,2,2,2))}
     plot(date,TS,main='The raw time series',
          xlab='Date',ylab='Measurements')
     plot(date[1:end(date)[1]-1],diff(TS),main='The differenced (once) time series',
@@ -205,11 +205,11 @@ TSAplots <- function(TS,date,trans="NONE",saveas="NONE") {
 
     # 1. Create the plots
     if(trans=="NONE"){
-      par(mfrow = c(3,2))}
+      par(mfrow = c(3,2),mar=c(2,2,4,4))}
     if(trans=="log"){
-      par(mfrow = c(4,2))}
+      par(mfrow = c(4,2),mar=c(2,2,4,4))}
     if(trans=="sqrt"){
-      par(mfrow = c(4,2))}
+      par(mfrow = c(4,2),mar=c(2,2,4,4))}
     plot(date,TS,main='The raw time series',
          xlab='Date',ylab='Measurements')
     plot(date[1:end(date)[1]-1],diff(TS),main='The differenced (once) time series',

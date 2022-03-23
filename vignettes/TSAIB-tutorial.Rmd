@@ -6,6 +6,7 @@ output:
   pdf_document:
     toc: true
     toc_depth: 2
+bibliography: C:/Users/Mathias Vendt/Desktop/DTU/Kandidat/Syntese projekt (30220)/TSAIB.bib
 vignette: >
   %\VignetteIndexEntry{Put the title of your vignette here}
   %\VignetteEngine{knitr::rmarkdown}
@@ -52,7 +53,8 @@ install.packages("ncdf4")
 
 * ncdf4
 * ggplot2
-* ggpubr
+* ggpub
+* forecast
 
 # Getting started with R
 The section gives a short introduction to R, which is useful to new R users.
@@ -91,7 +93,7 @@ The test data set is called \verb+TSdata+, and is included when the package is d
 ?TSdata
 ```
 
-In order to load the data into the R environment, the data set is assign a name "TSdata" like this: 
+In order to load the data into the R environment, the data set is assigned a name, e.g. "TSdata" like this: 
 ```{r, eval=FALSE, echo=TRUE}
 TSdata=TSdata
 ```
@@ -139,15 +141,140 @@ TSSmodel(TSdata$TSmatrix[2,2,],TSdata$date)
 ```
 
 ## Bruteforcing ARIMA(p,d,q)x(P,D,Q)s models
-From the time series analysis functions, some indications of adequate parameter estimates for arima/sarima models may be present, and if so, the \verb+ARIMAbuilder+ function could be useful. The inputs are the maximum number of p,q,P,Q parts in the arima model, and a fixed level of differencing: d and D. The output will display the top 5 best models, based on the Bayesian Information Criteria(BIC). BIC is chosen as it, according to Madsen 2007, yields a consistent estimate of the model order, and is given by:
+From the time series analysis functions, some indications of adequate parameter estimates for arima/sarima models may be present, and if so, the \verb+ARIMAbuilder+ function could be useful. The inputs are the maximum number of p,q,P,Q parts in the arima model, and a fixed level of differencing: d and D. The output will display the top 5 best models, based on the Bayesian Information Criteria(BIC). BIC is chosen as it, according to [@Madsen2008], yields a consistent estimate of the model order, and is given by:
 \begin{eqnarray}
 \text{BIC}=N\text{log}\hat{\sigma}^2_\epsilon+\text{log}(N)(p+q+P+Q+d+D)
 \end{eqnarray}
 with $N$ being the number of observations in the data set. By default, all parameters are set to 1:
 ```{r, eval=TRUE, echo=TRUE}
-ARIMAbuilder(TSdata$TSmatrix[2,2,])
+ARIMAbuilder(TSdata$TSmatrix[2,2,],TSdata$date)
 ```
+# Appendices
+## Data set used for demonstration of the TSAIB package:
+TSdata
+``` r 
+?TSdata
+ Description
+  An extracted list using the "GridTSExtract" function, from the data set:
+  Rose, S.K.; Andersen, O.B.; Passaro, M.; Ludwigsen, C.A.; Schwatke, 
+  C. Arctic Ocean Sea Level Record from the Complete Radar 
+  Altimetry Era: 1991-2018. Remote Sens. 2019, 11, 1672. 
+  https://www.mdpi.com/2072-4292/11/14/1672
+ Usage
+  TSdata
+ Format
+  A large list containing 5 elements, which are:
+  longitude: containing longitudes from -180:180, by increments of 0.5 degrees
+  (length: 720)
+  latitude: containing latitudes from 65:81.5, by increments of 0.25 degrees (length: 67)
+  date: containing years from 1991:2019, by increments of 1/12 (length:325)
+  measurements: containing sea_level_anomaly measurements for each increments of: 
+  longitude, latitude and date. (dimension: [67,720,325])
+  TSmatrix: containing a 3x3x325 grid of measurements centered around (lon,lat)=(-165,74)
+```
+## Functions
+GridTSExtract
+``` r 
+?GridTSExtract
+ Description
+  Extracts a time series from a NetCDF lon&lat coordinate grid
+ Usage
+GridTSExtract(
+  nco,
+  lonid = "longitude",
+  latid = "latitude",
+  timeid = "date",
+  measurementsid = "sea_level_anomaly",
+  coord = c(-165, 74),
+  radius = 0,
+  dlon = 2,
+  dlat = 4
+)
+ Arguments
+  nco: The NetCDF object (open with "nc_open" from the "ncdf4" library)
+  lonid: The variable id for longitude vector. e.g.: "longitude"
+  latid: The variable id for latitude vector. e.g.: "latitude"
+  timeid: The variable id for the time vector. e.g.: "date"
+  measurementsid: The variable id for the measurements vector. e.g.: "sea_level_anomaly"
+  coord: The center coordinate for the TS grid area. e.g.: c(lon,lat) i.e. c(-164,74)
+  radius: The square radius of the TS grid. e.g: 0=1x1 grid, 1=3x3 grid, 2=5x5 grid etc.
+  dlon: Number of data points for each degree longitude
+  dlat:Number of data points for each degree latitude
+```
+TSdiagnostics
+``` r 
+?TSdiagnostics
+ Description
+  Shows basic statistics and characteristics of the time series data
+ Usage
+  TSdiagnostics(TS, nanrem = "FALSE")
+ Arguments
+  TS:The time series to be analyzed
+  nanrem: Set NaN to be removed or not. e.g.: nanrem="TRUE"
+``` 
+TSnanrem
+``` r 
+?TSnanrem
+ Description
+  Removes or imputes NaN from the time series data set, with a specified method of choice
+ Usage
+  TSnanrem(TS, method = "mean", value_nr = 0)
+ Arguments
+  TS: The time series to remove NaN from
+  method: The imputation method. e.g.: "omit", "mean", "median" or "value"
+  value_nr: The specific value for the "value" imputing method. e.g.: value_nr=0
+``` 
+TSAplots
+``` r 
+?TSAplots
+ Description
+  Plots and saves the ACF and PACF for a pre-defined time series, with and without data 
+  transformations (log, sqrt), and differencing. Input type: Time series
+ Usage
+  TSAplots(TS, date, trans = "NONE", saveas = "NONE")
+ Arguments
+  TS: The time series for the TSAplots function
+  date: The time axis in the time series (dates, seconds, intervals)
+  trans: data transform parameter: trans='log' for log transform, trans='sqrt' for sqrt 
+  transform, and trans='NONE' for no transform
+  saveas: specifies the file format to save the plots in the current working directory. 
+  Possible formats is: PDF, JPEG, TIFF, BMP and PNG. e.g.: "pdf" or "jpeg". 
+  If no format is specified, it will not save the plots
+``` 
+TSSmodel
+``` r 
+?TSSmodel
+ Description
+  Estimates a simple time series model
 
+ Usage
+  TSSmodel(TS, date, p = 12, t = 1, testsize = round(length(date)/10))
+ Arguments
+  TS: The time series for the TSSmodel function
+  date: The time axis in the time series (dates, seconds, intervals)
+  p: The period. e.g.: p=12, for 12 months in a year
+  t: The time steps. e.g.: t=1, for monthly time steps, with period 12
+  testsize:	The number of data points to be used for testing the model
+``` 
+ARIMAbuilder
+``` r 
+?ARIMAbuilder
+ Description
+  Lists the top 5 estimated ARIMA/SARIMA models of the form: ARIMA(p,d,q)x(P,D,Q),
+  based on specified parameter values and ranges
+ Usage
+  ARIMAbuilder(TS, p = 1, d = 1, q = 1, P = 1, D = 1, Q = 1, S = 12)
+ Arguments
+  TS: The time series to build the models upon (remember to transform before
+  using this function!)
+  p: The maximum AR value, estimated from plot analysis
+  d: The fixed differencing, often 0, 1 or 2
+  q:	The maximum MA value, estimated from plot analysis
+  P:	The maximum seasonal AR value, estimated from plot analysis
+  D:	The fixed seasonal differencing, often 0, 1 or 2
+  Q:	The mazimum seasonal MA value, estimated from plot analysis
+  S:	The seasonality/period of the seasonal differencing
+``` 
 
-
+# References 
 
