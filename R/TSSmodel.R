@@ -6,7 +6,7 @@
 #' @param date The time axis in the time series (dates, seconds, intervals)
 #' @param testsize The number of data points to be used for testing the model
 #' @param p The period. e.g.: p=12, for 12 months in a year
-#' @param t The time steps. e.g.: t=1, for monthly time steps, with period 12 (?)
+#' @param t The time steps. e.g.: t=1, for monthly time steps, with period 12
 #' @return Simple TS model
 #' @export
 
