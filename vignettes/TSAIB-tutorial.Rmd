@@ -16,7 +16,9 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  warning=FALSE,
+  message=FALSE
 )
 ```
 
@@ -110,20 +112,20 @@ The user can also import their own data from a NetCDF file using the \verb+GridT
 ?GridTSExtract
 ```
 ## Gather simple statistics about the data 
-It is now desired to get a brief overview of the data, including statistics, distributions and plotting. This can be achieved using the \verb+TSdiagnostics+ function on the extracted 3x3 grid of measurements. To access sub elements of a construct in R, use \verb+$+ as a seperator between the parent object, and it's sub-directory. The function wont work for NaN elements, and since the extracted data contains a few of those, the \verb+nanrem+ option in the \verb+TSdiagnostics+ function is set to \verb+"TRUE"+ as shown below, which will omit any NaN elements for the analysis.
+It is now desired to get a brief overview of the data, including statistics, distributions and plotting. This can be achieved using the \verb+TSdiagnostics+ function. For this example, a meaned 30 point grid area (\verb+TS_area+) is analyzed, which is centered around (lon,lat)=(0,73.25). To access sub elements of a construct in R, use \verb+$+ as a seperator between the parent object, and it's sub-directory. The function wont work for NaN elements, and if the extracted data contains a few of those, the \verb+nanrem+ option in the \verb+TSdiagnostics+ function is set to \verb+"TRUE"+, which will omit any NaN elements for the analysis.
 ```{r, eval=TRUE, echo=TRUE}
-TSdiagnostics(TSdata$TSmatrix,nanrem="TRUE")
+TSdiagnostics(TS_area)
 ```
 ## Removing NaN
-If it is decided to remove NaN objects, the function \verb+TSnanrem+ can be used to do this, with a variety of options of how to deal with NaN. For this example, the NaN's are to replaced with the mean of the time series:
+If it is decided to remove NaN objects, the function \verb+TSnanrem+ can be used to do this, with a variety of options of how to deal with NaN. For this example, the NaN's of \verb+TSmatrix+ are to be replaced with the mean of the time series:
 ```{r, eval=FALSE, echo=TRUE}
 TSnanrem(TSdata$TSmatrix, method = "mean")
 ```
 
 ## Time series analysis plots
-It is possible to get an insight of the time series with the \verb+TSAplots+ function. This function utilizes R's inbuilt differencing function \verb+diff+, auto correlation function \verb+acf+ and partial auto correlation function \verb+pacf+, to display a collection of plots to determine the time series characteristics. It is possible to choose a transformation of the data, being either \verb+sqrt+ or \verb+log+ transformations, and even to save the plots in a variety of formats. For this example, the [2,2] grid point of \verb+TSdata$TSmatrix+ is analyzed, and the default settings is used, which doesn't transform the data or save the plots:
+It is possible to get an insight of the time series with the \verb+TSAplots+ function. This function utilizes R's inbuilt differencing function \verb+diff+, auto correlation function \verb+acf+ and partial auto correlation function \verb+pacf+, to display a collection of plots to determine the time series characteristics. It is possible to choose a transformation of the data, being either \verb+sqrt+ or \verb+log+ transformations, and even to save the plots in a variety of formats. The default settings is used, which doesn't transform the data or save the plots:
 ```{r, eval=TRUE, echo=TRUE}
-TSAplots(TSdata$TSmatrix[2,2,],TSdata$date)
+TSAplots(TS_area,TSdata$date)
 ```
 
 
@@ -137,7 +139,7 @@ Y_t=\alpha+\beta_tt+\beta_s\sin(\frac{2\pi}{p}t)+\beta_c\cos(\frac{2\pi}{p}t)
 \end{eqnarray}
 where the alpha and the betas are the estimated parameters, and p and t is set to 12 and 1 respectively by default:
 ```{r, eval=TRUE, echo=TRUE}
-TSSmodel(TSdata$TSmatrix[2,2,],TSdata$date)
+TSSmodel(TS_area,TSdata$date)
 ```
 
 ## Bruteforcing ARIMA(p,d,q)x(P,D,Q)s models
@@ -147,8 +149,9 @@ From the time series analysis functions, some indications of adequate parameter 
 \end{eqnarray}
 with $N$ being the number of observations in the data set. By default, all parameters are set to 1:
 ```{r, eval=TRUE, echo=TRUE}
-ARIMAbuilder(TSdata$TSmatrix[2,2,],TSdata$date)
+ARIMAbuilder(TS_area,TSdata$date)
 ```
+
 # Appendices
 ## Data set used for demonstration of the TSAIB package:
 TSdata

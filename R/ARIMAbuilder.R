@@ -58,8 +58,8 @@ forecasting=forecast(arima(TS,c(order1_1[1],d,order1_1[2]),seasonal=list(order=c
 forecasting_lower=forecasting$lower[,2]
 forecasting_upper=forecasting$upper[,2]
 
-plot(date,TS,col="red",ylim=c(min(TS,forecasting_lower,fitted(Arima(TS,c(order1_1[1],d,order1_1[2]),seasonal=list(order=c(order1_1[3],D,order1_1[4]),period=S)))[1:(length(TS)-round(length(TS)/10))]),max(TS,forecasting_upper,fitted(Arima(TS,c(order1_1[1],d,order1_1[2]),seasonal=list(order=c(order1_1[3],D,order1_1[4]),period=S)))[1:(length(TS)-round(length(TS)/10))])))
-lines(date[1:(length(TS)-round(length(TS)/10))],fitted(Arima(TS,c(order1_1[1],d,order1_1[2]),seasonal=list(order=c(order1_1[3],D,order1_1[4]),period=S)))[1:(length(TS)-round(length(TS)/10))])
+plot(date,TS,ylim=c(min(TS,forecasting_lower,fitted(Arima(TS,c(order1_1[1],d,order1_1[2]),seasonal=list(order=c(order1_1[3],D,order1_1[4]),period=S)))[1:(length(TS)-round(length(TS)/10))]),max(TS,forecasting_upper,fitted(Arima(TS,c(order1_1[1],d,order1_1[2]),seasonal=list(order=c(order1_1[3],D,order1_1[4]),period=S)))[1:(length(TS)-round(length(TS)/10))])))
+lines(date[1:(length(TS)-round(length(TS)/10))],fitted(Arima(TS,c(order1_1[1],d,order1_1[2]),seasonal=list(order=c(order1_1[3],D,order1_1[4]),period=S)))[1:(length(TS)-round(length(TS)/10))],col="red")
 title("TS:Red, #1model:Black, Pred:Blue, 95% Conf.: Green")
 forecasting_mean=forecasting$mean
 abline(v=date[length(TS)-round(length(TS)/10)],col="red",lty=2)

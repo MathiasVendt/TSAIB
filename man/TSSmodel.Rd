@@ -13,7 +13,7 @@ TSSmodel(TS, date, p = 12, t = 1, testsize = round(length(date)/10))
 
 \item{p}{The period. e.g.: p=12, for 12 months in a year}
 
-\item{t}{The time steps. e.g.: t=1, for monthly time steps, with period 12 (?)}
+\item{t}{The time steps. e.g.: t=1, for monthly time steps, with period 12}
 
 \item{testsize}{The number of data points to be used for testing the model}
 }

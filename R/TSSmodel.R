@@ -68,27 +68,27 @@ t.val <- qt(0.975, N - 2) # t value
 pred_up=c(0,0,0,0,0,0,0)
 pred_low=c(0,0,0,0,0,0,0)
 for(i in 1:testsize){
-  pred_up[i]=yhat_pred[i]+sqrt(Var_pred)
-  pred_low[i]=yhat_pred[i]-sqrt(Var_pred)
+  pred_up[i]=yhat_pred[i]+t.val*sqrt(Var_pred)
+  pred_low[i]=yhat_pred[i]-t.val*sqrt(Var_pred)
 }
 
-plot(date,Y,type="b",pch=19,xlab="Date",ylab="Measurement",main='TS')
+plot(date,Y,xlab="Date",ylab="Measurement",main='TS')
 
 # for all data:
 pred_up_full=c()
 pred_low_full=c()
 for(i in 1:length(TS)){
-  pred_up_full[i]=yhat[i]+sqrt(Var_pred)
-  pred_low_full[i]=yhat[i]-sqrt(Var_pred)
+  pred_up_full[i]=yhat[i]+t.val*sqrt(Var_pred)
+  pred_low_full[i]=yhat[i]-t.val*sqrt(Var_pred)
 }
 lines(date[(end(TS)[1]-testsize+1):end(TS)[1]],yhat_pred,col="red")
 lines(date[1:length(yhat)],yhat,col="red")
-lines(date[1:length(TS)],pred_up_full,col="blue")
-lines(date[1:length(TS)],pred_low_full,col="blue")
+lines(date[1:length(TS)],pred_up_full,col="green")
+lines(date[1:length(TS)],pred_low_full,col="green")
 lines(date[(end(TS)[1]-testsize+1):end(TS)[1]],pred_up,col="green")
 lines(date[(end(TS)[1]-testsize+1):end(TS)[1]],pred_low,col="green")
-legend(date[end(TS)[1]-length(TS)/3.8],-0.1, legend=c("Measurements", "Predicted","Confidence int,","Prediction int."),
-       col=c("black", "red","blue","green"), lty=c(1,1,1), cex=0.8)
+legend(date[1],0.09, legend=c("Measurements", "Predicted","Confidence int."),
+       col=c("black", "red","green"), lty=c(1,1,1), cex=0.8)
 
 
 print("Parameter estimates:")
