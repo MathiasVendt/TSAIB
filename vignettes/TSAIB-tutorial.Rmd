@@ -127,7 +127,7 @@ It is possible to get an insight of the time series with the \verb+TSAplots+ fun
 ```{r, eval=TRUE, echo=TRUE}
 TSAplots(TS_area,TSdata$date)
 ```
-A "tail-off" decay is observed in "ACF of time series", indicating an AR(p) part, and a cut-off is observed at lag 3 on "PACF of time series", indicating an AR(p=3) part could be reasonably assumed. The second row of plot show the ACF and PACF of the differenced time series (differenced once!), and the slow decay in the first ACF plot is clearly removed. Differencing once (d=1) is then a reasonable assumption. After differencing, a positive spike is seen at lag 12 on the "ACF of the differenced (once) time series"-plot, which could indicate a seasonality of 12 (S=12). This assumption is likely to be true, as the data used for this example is monthly observations of sea-level anomalies.  
+A "tail-off" decay is observed in "ACF of time series", indicating an AR(p) part, and a cut-off is observed at lag 3 on "PACF of time series", indicating an AR(p=3) part could be reasonably assumed. The second row of plots show the ACF and PACF of the differenced time series (differenced once!), and the slow decay in the first ACF plot is clearly removed. Differencing once (d=1) is then a reasonable assumption. After differencing, a positive spike is seen at lag 12 on the "ACF of the differenced (once) time series"-plot, which could indicate a seasonality of 12 (S=12). This assumption is likely to be true, as the data used for this example is monthly observations of sea-level anomalies.  
 
 # Using "TSAIB" for model estimation 
 To estimate a model which is describing the time series at hand, the \verb+TSAIB+ package containes several functions with different approches:
