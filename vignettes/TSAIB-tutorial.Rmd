@@ -277,7 +277,7 @@ ARIMAbuilder
   q:	The maximum MA value, estimated from plot analysis
   P:	The maximum seasonal AR value, estimated from plot analysis
   D:	The fixed seasonal differencing, often 0, 1 or 2
-  Q:	The mazimum seasonal MA value, estimated from plot analysis
+  Q:	The maximum seasonal MA value, estimated from plot analysis
   S:	The seasonality/period of the seasonal differencing
 ``` 
 
