@@ -9,7 +9,7 @@
 #' @param q The maximum MA value, estimated from plot analysis
 #' @param P The maximum seasonal AR value, estimated from plot analysis
 #' @param D The fixed seasonal differencing, often 0, 1 or 2
-#' @param Q The mazimum seasonal MA value, estimated from plot analysis
+#' @param Q The maximum seasonal MA value, estimated from plot analysis
 #' @param S The seasonality/period of the seasonal differencing
 #' @return list of top 5 ARIMA/SARIMA models
 #' @export
