@@ -127,10 +127,21 @@ It is possible to get an insight of the time series with the \verb+TSAplots+ fun
 ```{r, eval=TRUE, echo=TRUE}
 TSAplots(TS_area,TSdata$date)
 ```
-
+A "tail-off" decay is observed in "ACF of time series", indicating an AR(p) part, and a cut-off is observed at lag 3 on "PACF of time series", indicating an AR(p=3) part could be reasonably assumed. The second row of plot show the ACF and PACF of the differenced time series (differenced once!), and the slow decay in the first ACF plot is clearly removed. Differencing once (d=1) is then a reasonable assumption. After differencing, a positive spike is seen at lag 12 on the "ACF of the differenced (once) time series"-plot, which could indicate a seasonality of 12 (S=12). This assumption is likely to be true, as the data used for this example is monthly observations of sea-level anomalies.  
 
 # Using "TSAIB" for model estimation 
 To estimate a model which is describing the time series at hand, the \verb+TSAIB+ package containes several functions with different approches:
+
+## Bruteforcing ARIMA(p,d,q)x(P,D,Q)s models
+From the time series analysis functions, some indications of adequate parameter estimates for ARIMA models may be present, and if so, the \verb+ARIMAbuilder+ function could be useful. The inputs are the maximum number of p,q,P,Q parts in the arima model, and a fixed level of differencing: d and D. The output will display the top 5 best models, based on the Bayesian Information Criteria(BIC). BIC is chosen as it, according to [@Madsen2008], yields a consistent estimate of the model order, and is given by:
+\begin{eqnarray}
+\text{BIC}=N\text{log}\hat{\sigma}^2_\epsilon+\text{log}(N)(p+q+P+Q+d+D)
+\end{eqnarray}
+with $N$ being the number of observations in the data set. By default, all parameters are set to 1, with seasonality set to 12 (i.e.: ARIMA(1,1,1)x(1,1,1)_12). For this example, however, the reasonable parameter guesses from \verb+TSAplots+ are used: ARIMA(p=3,d=1,q=?)x(P=?,D=?,Q=?)_S=12. Estimating ARIMA models is not an exact science, and ACF and PACF plots on real time series data is sometimes ambiguous. Hence the missing parameters are to be set to a reasonable guess of the maximum parameter value. The higher the parameter range, the more processing is needed to run \verb+ARIMAbuilder+. To make the processing relatively fast, the remaining parameter estimates are set to 1: ARIMA(3,1,1,1,1,1)_12
+```{r, eval=TRUE, echo=TRUE}
+ARIMAbuilder(TS_area,TSdata$date,3,1,1,1,1,1,12)
+```
+It is seen that the best model based on BIC is: ARIMA(1,1,1)x(1,1,1)_12, and that is shown in the figure above. 
 
 ## Simple time series model estimation, using OLS
 The function \verb+TSSmodel+ estimates a simple model of the form:
@@ -142,15 +153,6 @@ where the alpha and the betas are the estimated parameters, and p and t is set t
 TSSmodel(TS_area,TSdata$date)
 ```
 
-## Bruteforcing ARIMA(p,d,q)x(P,D,Q)s models
-From the time series analysis functions, some indications of adequate parameter estimates for arima/sarima models may be present, and if so, the \verb+ARIMAbuilder+ function could be useful. The inputs are the maximum number of p,q,P,Q parts in the arima model, and a fixed level of differencing: d and D. The output will display the top 5 best models, based on the Bayesian Information Criteria(BIC). BIC is chosen as it, according to [@Madsen2008], yields a consistent estimate of the model order, and is given by:
-\begin{eqnarray}
-\text{BIC}=N\text{log}\hat{\sigma}^2_\epsilon+\text{log}(N)(p+q+P+Q+d+D)
-\end{eqnarray}
-with $N$ being the number of observations in the data set. By default, all parameters are set to 1:
-```{r, eval=TRUE, echo=TRUE}
-ARIMAbuilder(TS_area,TSdata$date)
-```
 
 # Appendices
 ## Data set used for demonstration of the TSAIB package:
