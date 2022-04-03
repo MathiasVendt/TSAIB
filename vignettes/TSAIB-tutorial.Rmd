@@ -141,7 +141,7 @@ with $N$ being the number of observations in the data set. By default, all param
 ```{r, eval=TRUE, echo=TRUE}
 ARIMAbuilder(TS_area,TSdata$date,3,1,1,1,1,1,12)
 ```
-It is seen that the best model based on BIC is: ARIMA(1,1,1)x(1,1,1)_12, and that is shown in the figure above. 
+It is seen that ARIMA(1,1,3)x(1,1,1)_12 is on third place, ARIMA(1,1,2)x(1,1,1)_12 is on second place, and the best model based on BIC is: ARIMA(1,1,1)x(1,1,1)_12, and that is shown in the figure above. 
 
 ## Simple time series model estimation, using OLS
 The function \verb+TSSmodel+ estimates a simple model of the form:
