@@ -21,7 +21,7 @@ ARIMAbuilder(TS, date, p = 1, d = 1, q = 1, P = 1, D = 1, Q = 1, S = 12)
 
 \item{D}{The fixed seasonal differencing, often 0, 1 or 2}
 
-\item{Q}{The mazimum seasonal MA value, estimated from plot analysis}
+\item{Q}{The maximum seasonal MA value, estimated from plot analysis}
 
 \item{S}{The seasonality/period of the seasonal differencing}
 }
