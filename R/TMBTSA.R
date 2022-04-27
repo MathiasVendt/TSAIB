@@ -35,9 +35,10 @@ TimeSeriesMatrix[is.na(TimeSeriesMatrix)]=NA
 TimeSeriesVector=as.vector(TimeSeriesMatrix)
 
 # Initializing TMB
-library(TMB)
-compile("RWpNOISEpINDEX.cpp")
-dyn.load(dynlib("RWpNOISEpINDEX"))
+#library(TMB)
+#compile("RW.cpp")
+#dyn.load(dynlib("RW"))
+
 data <- list(y=TimeSeriesVector,
              timeindex=timeindex)
 parameters <- list(
@@ -47,7 +48,7 @@ parameters <- list(
   lam=lam
 )
 
-obj <- MakeADFun(data,parameters,random="lam",DLL="RWpNOISEpINDEX")
+obj <- MakeADFun(data,parameters,random="lam",DLL="RW")
 
 obj$fn()
 obj$gr()
@@ -56,20 +57,20 @@ opt<-nlminb(obj$par,obj$fn,obj$gr)
 sdr<-sdreport(obj)
 pl <- as.list(sdr,"Est")
 plsd <- as.list(sdr,"Std")
-save(pl,plsd,file="RWpNOISE.RData")
+save(pl,plsd,file="RW.RData")
 
 # The correct CI95%
 t.val <- qt(0.975, length(data$y) - 2)
 
-plot(TSdata$date,rep(0,numberoftime),xlab="Date",ylab="Measurement",main='TS',
+plot(date,rep(0,numberoftime),xlab="Date",ylab="Measurement",main='TS',
      col="white",ylim = c(min(TimeSeriesMatrix,na.rm = TRUE),max(TimeSeriesMatrix,na.rm = TRUE)))
 for (j in 1:dim(TimeSeriesMatrix)[2]) {
   for (k in 1:dim(TimeSeriesMatrix)[1]) {
-    points(TSdata$date,TimeSeriesMatrix[k,j,],col="black")
+    points(date,TimeSeriesMatrix[k,j,],col="black")
   }
 }
-lines(TSdata$date[1:length(plsd$lam)],pl$lam,col="red")
-lines(TSdata$date[1:length(plsd$lam)],pl$lam+ t.val*plsd$lam,col="green")
-lines(TSdata$date[1:length(plsd$lam)],pl$lam- t.val*plsd$lam,col="green")
+lines(date[1:length(plsd$lam)],pl$lam,col="red")
+lines(date[1:length(plsd$lam)],pl$lam+ t.val*plsd$lam,col="green")
+lines(date[1:length(plsd$lam)],pl$lam- t.val*plsd$lam,col="green")
 
 }
