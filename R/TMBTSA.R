@@ -48,7 +48,7 @@ TMBTSA <- function(TSM,date) {
     lam=lam
   )
 
-  obj <- MakeADFun(data,parameters,random="lam",DLL="TMBTSA_RW")
+  obj <- MakeADFun(data,parameters,random="lam",DLL="TSAIB")
 
   obj$fn()
   obj$gr()
@@ -57,7 +57,7 @@ TMBTSA <- function(TSM,date) {
   sdr<-sdreport(obj)
   pl <- as.list(sdr,"Est")
   plsd <- as.list(sdr,"Std")
-  save(pl,plsd,file="RW.RData")
+  save(pl,plsd,file="TSAIB.RData")
 
   # The correct CI95%
   t.val <- qt(0.975, length(data$y) - 2)
