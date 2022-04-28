@@ -132,8 +132,8 @@ A "tail-off" decay is observed in "ACF of time series", indicating an AR(p) part
 # Using "TSAIB" for model estimation 
 To estimate a model which is describing the time series at hand, the \verb+TSAIB+ package containes several functions with different approches:
 
-## Bruteforcing ARIMA(p,d,q)x(P,D,Q)s models
-From the time series analysis functions, some indications of adequate parameter estimates for ARIMA models may be present, and if so, the \verb+ARIMAbuilder+ function could be useful. The inputs are the maximum number of p,q,P,Q parts in the arima model, and a fixed level of differencing: d and D. The output will display the top 5 best models, based on the Bayesian Information Criteria(BIC). BIC is chosen as it, according to [@Madsen2008], yields a consistent estimate of the model order, and is given by:
+## Iterative scanning of ARIMA(p,d,q)x(P,D,Q)s models
+From the time series analysis functions, some indications of adequate parameter estimates for ARIMA models may be present, and if so, the \verb+ARIMAbuilder+ function could be useful. The inputs are the maximum number of p,q,P,Q parts in the arima model, and a fixed level of differencing: d and D. The output will display the top 5 best models, based on the Bayesian Information Criteria (BIC). BIC is chosen as it, according to [@Madsen2008], yields a consistent estimate of the model order, and is given by:
 \begin{eqnarray}
 \text{BIC}=N\text{log}\hat{\sigma}^2_\epsilon+\text{log}(N)(p+q+P+Q+d+D)
 \end{eqnarray}
