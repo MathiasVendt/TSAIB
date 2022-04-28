@@ -2,6 +2,7 @@
 
 export(ARIMAbuilder)
 export(GridTSExtract)
+export(IB)
 export(TMBTSA)
 export(TSAIB)
 export(TSAplots)
