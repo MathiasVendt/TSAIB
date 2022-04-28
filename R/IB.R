@@ -11,5 +11,36 @@
 
 IB <- function(TSM,date,biasvec=c(1,-2),biasid) {
 
+  TimeSeriesMatrix=TSM
+
+  numberoftime=dim(TimeSeriesMatrix)[3] # dims are: x, y and time.
+  bias1=biasvec[1]
+  bias2=biasvec[2]
+
+  TimeSeriesMatrixBias=TimeSeriesMatrix
+
+  TimeSeriesMatrixCORR=TimeSeriesMatrixBias
+  TimeSeriesMatrixCORR[biasid==1]=TimeSeriesMatrixCORR[biasid==1]+bias1
+  TimeSeriesMatrixCORR[biasid==2]=TimeSeriesMatrixCORR[biasid==2]+bias2
+
+
+  par(mfrow = c(2,1),mar=c(4,4,3,1))
+  # Plottting the biased data
+  plot(date,rep(0,numberoftime),xlab="Date",ylab="Measurement",main='TS+bias',
+       col="white",ylim = c(min(TimeSeriesMatrixBias,na.rm = TRUE),max(TimeSeriesMatrixBias,na.rm = TRUE)))
+  for (j in 1:dim(TimeSeriesMatrixBias)[2]) {
+    for (k in 1:dim(TimeSeriesMatrixBias)[1]) {
+      points(date,TimeSeriesMatrixBias[k,j,],col="black")
+    }
+  }
+  # Plottting the bias corrected data
+  plot(date,rep(0,numberoftime),xlab="Date",ylab="Measurement",main='TS w. bias correction',
+       col="white",ylim = c(min(TimeSeriesMatrixCORR,na.rm = TRUE),max(TimeSeriesMatrixCORR,na.rm = TRUE)))
+  for (j in 1:dim(TimeSeriesMatrixBias)[2]) {
+    for (k in 1:dim(TimeSeriesMatrixBias)[1]) {
+      points(date,TimeSeriesMatrixCORR[k,j,],col="black")
+    }
+  }
+
 
 }
