@@ -2,7 +2,7 @@
 % Please edit documentation in R/IB.R
 \name{IB}
 \alias{IB}
-\title{Time Series model (simple constant + trend + sinus + cosine)}
+\title{Intermission Bias}
 \usage{
 IB(TSM, date, biasvec = c(1, -2), biasid)
 }
@@ -19,5 +19,5 @@ IB(TSM, date, biasvec = c(1, -2), biasid)
 Time series struct with bias correction
 }
 \description{
-Estimates a simple time series model
+Corrects a struct of timeseries for up to two intermission biases
 }

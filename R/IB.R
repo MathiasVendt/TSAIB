@@ -1,6 +1,6 @@
-#' @title Time Series model (simple constant + trend + sinus + cosine)
+#' @title Intermission Bias
 #'
-#' @description Estimates a simple time series model
+#' @description Corrects a struct of timeseries for up to two intermission biases
 #'
 #' @param TSM The time series struct with the intermission bias
 #' @param date The time axis in the time series (dates, seconds, intervals)
@@ -24,7 +24,7 @@ IB <- function(TSM,date,biasvec=c(1,-2),biasid) {
   TimeSeriesMatrixCORR[biasid==2]=TimeSeriesMatrixCORR[biasid==2]+bias2
 
 
-  par(mfrow = c(2,1),mar=c(4,4,3,1))
+  par(mfrow = c(2,1),mar=c(4,4,1,1))
   # Plottting the biased data
   plot(date,rep(0,numberoftime),xlab="Date",ylab="Measurement",main='TS+bias',
        col="white",ylim = c(min(TimeSeriesMatrixBias,na.rm = TRUE),max(TimeSeriesMatrixBias,na.rm = TRUE)))

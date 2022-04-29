@@ -78,7 +78,7 @@ q()
 ```
 
 # Introduction to the package "TSAIB"
-TSAIB is an R package aimed at getting statistical insight and performing time series analysis of satellite observations consisting of sea-level anomalies measured in the arctic ocean. A variety of functions is provided in order to determine a time series model based on the analyses and insights from the analysis functions. In this introduction, examples are given to illustrate how to use the package.  
+TSAIB is a R package aimed at getting statistical insight, correct for intermission bias and performing time series analysis of satellite observations consisting of sea-level anomalies measured in the arctic ocean. A variety of functions is provided in order to determine a time series model based on the analyses and insights from the analysis functions. In this introduction, examples are given to illustrate how to use the package.  
 
 To load the package simply write: 
 
@@ -121,6 +121,13 @@ If it is decided to remove NaN objects, the function \verb+TSnanrem+ can be used
 ```{r, eval=FALSE, echo=TRUE}
 TSnanrem(TSdata$TSmatrix, method = "mean")
 ```
+
+## Intermission bias correction
+Some times, the data consists of measurements from different satellite missions, and these measurements will have different biases and need to be aligned. This calls for correction of intermission biases, and if the bias is known, it can be accounted for using the \verb+IB+ function. The input to this function is a time series struct \verb+TSM+, a date vector, a bias vector containing up to two different biases \verb+c(bias1,bias2)+ and lastly, a bias index struct, with the same dimensions as \verb+TSM+, containing zeros for the restrained time series, and integers 1 & 2, for bias1 and bias2 respectively. In the following example, the same 3x3x325 time series as used before, has been added a bias of \verb+c(1,-2)+, and is called \verb+TimeSeriesMatrixBias+, with the corresponding bias index struct \verb+biasid+.
+```{r, eval=TRUE, echo=TRUE}
+IB(TimeSeriesMatrixBias,TSdata$date,c(1,-2),biasid)
+```
+
 
 ## Time series analysis plots
 It is possible to get an insight of the time series with the \verb+TSAplots+ function. This function utilizes R's inbuilt differencing function \verb+diff+, auto correlation function \verb+acf+ and partial auto correlation function \verb+pacf+, to display a collection of plots to determine the time series characteristics. It is possible to choose a transformation of the data, being either \verb+sqrt+ or \verb+log+ transformations, and even to save the plots in a variety of formats. The default settings is used, which doesn't transform the data or save the plots:
