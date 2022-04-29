@@ -212,6 +212,7 @@ GridTSExtract(
   radius: The square radius of the TS grid. e.g: 0=1x1 grid, 1=3x3 grid, 2=5x5 grid etc.
   dlon: Number of data points for each degree longitude
   dlat:Number of data points for each degree latitude
+ Value: Time series from grid
 ```
 TSdiagnostics
 ``` r 
@@ -223,6 +224,7 @@ TSdiagnostics
  Arguments
   TS:The time series to be analyzed
   nanrem: Set NaN to be removed or not. e.g.: nanrem="TRUE"
+ Value: Basic statistics and characteristics
 ``` 
 TSnanrem
 ``` r 
@@ -235,7 +237,22 @@ TSnanrem
   TS: The time series to remove NaN from
   method: The imputation method. e.g.: "omit", "mean", "median" or "value"
   value_nr: The specific value for the "value" imputing method. e.g.: value_nr=0
-``` 
+ Value: Time series with NaNs removed or replaced
+```
+IB
+``` r 
+?IB
+ Description
+  Corrects a struct of timeseries for up to two intermission biases
+ Usage
+  IB(TSM, date, biasvec = c(1, -2), biasid)
+ Arguments
+  TSM: The time series struct with the intermission bias
+  date: The time axis in the time series (dates, seconds, intervals)
+  biasvec: The vector containging up to 2 different bias. If the data only contains one bias, insert that value instead of the vector
+  biasid: A struct with the same dimensions as TSM, with integers indicating the bias: 0 for the restrained time series, 1 for the first bias and 2 for the second bias.
+Value: Time series struct with bias correction
+```
 TSAplots
 ``` r 
 ?TSAplots
@@ -252,6 +269,7 @@ TSAplots
   saveas: specifies the file format to save the plots in the current working directory. 
   Possible formats is: PDF, JPEG, TIFF, BMP and PNG. e.g.: "pdf" or "jpeg". 
   If no format is specified, it will not save the plots
+ Value: Plots from TSAplots
 ``` 
 TSSmodel
 ``` r 
@@ -267,6 +285,7 @@ TSSmodel
   p: The period. e.g.: p=12, for 12 months in a year
   t: The time steps. e.g.: t=1, for monthly time steps, with period 12
   testsize:	The number of data points to be used for testing the model
+ Value: Simple TS model
 ``` 
 ARIMAbuilder
 ``` r 
@@ -286,6 +305,7 @@ ARIMAbuilder
   D:	The fixed seasonal differencing, often 0, 1 or 2
   Q:	The maximum seasonal MA value, estimated from plot analysis
   S:	The seasonality/period of the seasonal differencing
+ Value: list of top 5 ARIMA/SARIMA models
 ``` 
 
 # References 

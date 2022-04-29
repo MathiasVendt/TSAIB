@@ -11,9 +11,9 @@ IB(TSM, date, biasvec = c(1, -2), biasid)
 
 \item{date}{The time axis in the time series (dates, seconds, intervals)}
 
-\item{biasvec}{The vector containging up to 2 different bias. If the data only contains 1 bias, insert that value instead}
+\item{biasvec}{The vector containging up to 2 different bias. If the data only contains 1 bias, insert that value instead of the vector}
 
-\item{biasid}{a struct with the same dimensions as TSM, with integers indicating the bias: 0 for the restrained time series, 1 for the first bias and 2 for the second bias.}
+\item{biasid}{A struct with the same dimensions as TSM, with integers indicating the bias: 0 for the restrained time series, 1 for the first bias and 2 for the second bias.}
 }
 \value{
 Time series struct with bias correction
