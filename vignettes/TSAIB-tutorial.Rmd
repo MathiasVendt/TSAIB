@@ -160,6 +160,12 @@ where the alpha and the betas are the estimated parameters, and p and t is set t
 TSSmodel(TS_area,TSdata$date)
 ```
 ## Using TMB to estimate a RW model, and account for intermission bias 
+TMB stands for "Template Model Builder", and is a C++ interface for automatic differentiation that implements Laplace's method to estimate a time series model. For more info on TMB and how to install the package, please visit https://github.com/kaskr/adcomp.
+
+Selected TMB functions have been implemented into TSAIB, in order to efficiently estimate a Random Walk (RW) model, based on likelihood functions. These TMB functions are gathered in one TSAIB function, called \verb+TMBTSA+. This function has three inputs: TSM (a struct with time series data), date (the usual vector containing time stamps) and biasid (a struct with the same dimensions as TSM, containing the ones where the biased data is). \verb+TMBTSA+ can handle one bias at a time, and doesn't need to know the exact bias value, in contrast to the \verb+IB+ function, as it will estimate constant bias in the process. Furthermore, TSM doesn't have to be corrected for NaN, as \verb+TMBTSA+ will handle those as well. 
+
+For the next example, a synthetic time series struct \verb+TimeSeriesMatrixBiasTMB+ is used. As with the demonstration for the \verb+IB+ function, this is an altered version of \verb+TSdata$TSmatrix+, with a single bias added this time. An illustration of the synthetic data is shown below:
+
 ```{r,message=FALSE , eval=TRUE, echo=FALSE}
 plot(TSdata$date,rep(0,length(TSdata$date)),xlab="Date",ylab="Measurement",main='TS with bias',col="white",ylim = c(min(TimeSeriesMatrixBiasTMB,na.rm = TRUE),max(TimeSeriesMatrixBiasTMB,na.rm = TRUE)))
 for (j in 1:dim(TSdata$TSmatrix)[2]) {
@@ -168,10 +174,13 @@ for (j in 1:dim(TSdata$TSmatrix)[2]) {
   }
 }
 ```
+The bias index that matches \verb+TimeSeriesMatrixBiasTMB+ is \verb+biasidTMB+. Together with the date vector \verb+TSdata$date+, \verb+TimeSeriesMatrixBiasTMB+ and \verb+biasidTMB+ are inserted into \verb+TMBTSA+ as so:
 
 ```{r,message=FALSE , eval=FALSE, echo=TRUE}
 TMBTSA(TimeSeriesMatrixBiasTMB,TSdata$date,biasidTMB)
 ```
+The iterative messages from the process has been left out, as it's excessive information for this tutorial. The estimated RW model is shown below:
+
 ```{r,message=FALSE , eval=TRUE, echo=FALSE}
   plot(TSdata$date,rep(0,length(TSdata$date)),xlab="Date",ylab="Measurement",main='Estimated RW',
        col="white",ylim = c(min(DEMOpllam- DEMOtval*DEMOplsdlam),max(DEMOpllam+ DEMOtval*DEMOplsdlam)))
@@ -180,11 +189,9 @@ TMBTSA(TimeSeriesMatrixBiasTMB,TSdata$date,biasidTMB)
   lines(TSdata$date,DEMOpllam- DEMOtval*DEMOplsdlam,col="green")
 
 ```
+To compare the estimates with the data without bias,\verb+TSdata$TSmatrix+ is plottet together with the estimates below.
 
 ```{r, eval=TRUE, echo=FALSE}
-# And to compare with the data without bias, TSdata$TSmatrix is shown below
-#plot(TSdata$date,TSdata$TSmatrix,main="TS without bias + estimates")
-#plot(TSdata$date,TSarea,xlab="Date",ylab="Measurement",main="TS without bias")
 plot(TSdata$date,rep(0,length(TSdata$date)),xlab="Date",ylab="Measurement",main='TS without bias + Estimated RW',col="white",ylim = c(min(TSdata$TSmatrix,na.rm = TRUE),max(TSdata$TSmatrix,na.rm = TRUE)))
 for (j in 1:dim(TSdata$TSmatrix)[2]) {
   for (k in 1:dim(TSdata$TSmatrix)[1]) {
@@ -196,6 +203,11 @@ for (j in 1:dim(TSdata$TSmatrix)[2]) {
   lines(TSdata$date,DEMOpllam- DEMOtval*DEMOplsdlam,col="green")
 
 ```
+The green lines illustrate the 95% CI, and since the standard deviations from !!!!!!
+
+# Conclusion
+
+# Discussion
 
 # Appendices
 ## Data set used for demonstration of the TSAIB package:
@@ -315,6 +327,16 @@ DEMOplsdlam
   DEMOplsdlam
  Format
   A numerical vector with length: 325
+```
+DEMOtval
+``` r 
+?DEMOtval
+ Description
+  T-value for the 95% confidence interval for the TMBTSA function
+ Usage
+  DEMOtval
+ Format
+  A numerical value
 ```
 ## Functions
 GridTSExtract
