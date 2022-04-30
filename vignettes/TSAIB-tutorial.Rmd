@@ -159,8 +159,42 @@ where the alpha and the betas are the estimated parameters, and p and t is set t
 ```{r, eval=TRUE, echo=TRUE}
 TSSmodel(TS_area,TSdata$date)
 ```
-```{r, eval=TRUE, echo=TRUE}
-TMBTSA(TimeSeriesMatrixBias,TSdata$date,biasid)
+## Using TMB to estimate a RW model, and account for intermission bias 
+```{r,message=FALSE , eval=TRUE, echo=FALSE}
+plot(TSdata$date,rep(0,length(TSdata$date)),xlab="Date",ylab="Measurement",main='TS with bias',col="white",ylim = c(min(TimeSeriesMatrixBiasTMB,na.rm = TRUE),max(TimeSeriesMatrixBiasTMB,na.rm = TRUE)))
+for (j in 1:dim(TSdata$TSmatrix)[2]) {
+  for (k in 1:dim(TSdata$TSmatrix)[1]) {
+    points(TSdata$date,TimeSeriesMatrixBiasTMB[k,j,],col="black")
+  }
+}
+```
+
+```{r,message=FALSE , eval=FALSE, echo=TRUE}
+TMBTSA(TimeSeriesMatrixBiasTMB,TSdata$date,biasidTMB)
+```
+```{r,message=FALSE , eval=TRUE, echo=FALSE}
+  plot(TSdata$date,rep(0,length(TSdata$date)),xlab="Date",ylab="Measurement",main='Estimated RW',
+       col="white",ylim = c(min(DEMOpllam- DEMOtval*DEMOplsdlam),max(DEMOpllam+ DEMOtval*DEMOplsdlam)))
+  lines(TSdata$date,DEMOpllam,col="red")
+  lines(TSdata$date,DEMOpllam+ DEMOtval*DEMOplsdlam,col="green")
+  lines(TSdata$date,DEMOpllam- DEMOtval*DEMOplsdlam,col="green")
+
+```
+
+```{r, eval=TRUE, echo=FALSE}
+# And to compare with the data without bias, TSdata$TSmatrix is shown below
+#plot(TSdata$date,TSdata$TSmatrix,main="TS without bias + estimates")
+#plot(TSdata$date,TSarea,xlab="Date",ylab="Measurement",main="TS without bias")
+plot(TSdata$date,rep(0,length(TSdata$date)),xlab="Date",ylab="Measurement",main='TS without bias + Estimated RW',col="white",ylim = c(min(TSdata$TSmatrix,na.rm = TRUE),max(TSdata$TSmatrix,na.rm = TRUE)))
+for (j in 1:dim(TSdata$TSmatrix)[2]) {
+  for (k in 1:dim(TSdata$TSmatrix)[1]) {
+    points(TSdata$date,TSdata$TSmatrix[k,j,],col="black")
+  }
+}
+  lines(TSdata$date,DEMOpllam,col="red")
+  lines(TSdata$date,DEMOpllam+ DEMOtval*DEMOplsdlam,col="green")
+  lines(TSdata$date,DEMOpllam- DEMOtval*DEMOplsdlam,col="green")
+
 ```
 
 # Appendices
@@ -308,6 +342,19 @@ ARIMAbuilder
   Q:	The maximum seasonal MA value, estimated from plot analysis
   S:	The seasonality/period of the seasonal differencing
  Value: list of top 5 ARIMA/SARIMA models
+``` 
+TMBTSA
+``` r 
+?TMBTSA
+ Description
+  Utilizes TMB, which is a C++ interface for automatic differentiation that implements Laplace's method, to estimate a time series model
+ Usage
+  TMBTSA(TSM, date, biasid)
+ Arguments
+  TSM: The time series struct, with dimensions (x/lon,y/lat,timesteps)
+  date: The time axis in the time series (i.e., dates, seconds, intervals) 
+  biasid: A struct with the same dimensions as TSM, with integers indicating the bias: 0 for the restrained time series and 1 for the bias. If no bias is present, biasid contains only zeros.
+ Value: RW model
 ``` 
 
 # References 

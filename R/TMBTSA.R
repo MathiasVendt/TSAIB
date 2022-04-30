@@ -67,7 +67,7 @@ TMBTSA <- function(TSM,date,biasid) {
   # The correct CI95%
   t.val <- qt(0.975, length(data$y) - 2)
 
-  plot(date,rep(0,numberoftime),xlab="Date",ylab="Measurement",main='TS',
+  plot(date,rep(0,numberoftime),xlab="Date",ylab="Measurement",main='Estimated RW model',
        col="white",ylim = c(min(pl$lam- t.val*plsd$lam),max(pl$lam+ t.val*plsd$lam)))
   lines(date[1:length(plsd$lam)],pl$lam,col="red")
   lines(date[1:length(plsd$lam)],pl$lam+ t.val*plsd$lam,col="green")
