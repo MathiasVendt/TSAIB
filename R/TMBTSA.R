@@ -4,10 +4,11 @@
 #'
 #' @param TSM The time series matrix, with dimensions (x/lon,y/lat,timesteps)
 #' @param date The time axis in the time series (i.e., dates, seconds, intervals)
+#' @param biasid A struct with the same dimensions as TSM, with integers indicating the bias: 0 for the restrained time series and 1 for the bias. If no bias is present, biasid contains only zeros.
 #' @return RW model
 #' @export
 
-TMBTSA <- function(TSM,date) {
+TMBTSA <- function(TSM,date,biasid) {
 
 
   # Defining the Time Series Matrix
@@ -23,7 +24,9 @@ TMBTSA <- function(TSM,date) {
   for (i in 1:numberoftime) {
     timeindex[,,i]=i-1               # Inserting index, with start index=0
   }
+  # vectorize indices
   timeindex=as.vector(timeindex)
+  biasid=as.vector(biasid)
 
   # Initializing zero vector (lam)
   lam=rep(0,numberoftime)  # allocating space
@@ -35,17 +38,19 @@ TMBTSA <- function(TSM,date) {
   TimeSeriesVector=as.vector(TimeSeriesMatrix)
 
   # Initializing TMB
-  #library(TMB)
-  #compile("RW.cpp")
-  #dyn.load(dynlib("RW"))
+  library(TMB)
+#  compile("TSAIB.cpp")
+#  dyn.load(dynlib("TSAIB"))
 
   data <- list(y=TimeSeriesVector,
-               timeindex=timeindex)
+               timeindex=timeindex,
+               biasid=biasid)
   parameters <- list(
     logSdRw=0,
     logSdObs=0,
     lam0=0,
-    lam=lam
+    lam=lam,
+    bias=0
   )
 
   obj <- MakeADFun(data,parameters,random="lam",DLL="TSAIB")
@@ -63,12 +68,7 @@ TMBTSA <- function(TSM,date) {
   t.val <- qt(0.975, length(data$y) - 2)
 
   plot(date,rep(0,numberoftime),xlab="Date",ylab="Measurement",main='TS',
-       col="white",ylim = c(min(TimeSeriesMatrix,na.rm = TRUE),max(TimeSeriesMatrix,na.rm = TRUE)))
-  for (j in 1:dim(TimeSeriesMatrix)[2]) {
-    for (k in 1:dim(TimeSeriesMatrix)[1]) {
-      points(date,TimeSeriesMatrix[k,j,],col="black")
-    }
-  }
+       col="white",ylim = c(min(pl$lam- t.val*plsd$lam),max(pl$lam+ t.val*plsd$lam)))
   lines(date[1:length(plsd$lam)],pl$lam,col="red")
   lines(date[1:length(plsd$lam)],pl$lam+ t.val*plsd$lam,col="green")
   lines(date[1:length(plsd$lam)],pl$lam- t.val*plsd$lam,col="green")

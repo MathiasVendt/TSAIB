@@ -4,14 +4,16 @@ bool isNA(Type x){
   return R_IsNA(asDouble(x));
 }
 template<class Type>
-  Type objective_function<Type>::operator() ()
+Type objective_function<Type>::operator() ()
 {
   DATA_VECTOR(y);
   DATA_IVECTOR(timeindex);
+  DATA_IVECTOR(biasid);
   PARAMETER(logSdRw);
   PARAMETER(logSdObs);
   PARAMETER(lam0);
   PARAMETER_VECTOR(lam);
+  PARAMETER(bias);
   int timeSteps=y.size();
   Type sdRw=exp(logSdRw);
   Type sdObs=exp(logSdObs);
@@ -21,8 +23,8 @@ template<class Type>
   }
   for(int i=0;i<timeSteps;i++){
     if(!isNA(y(i))){
-    ans+=-dnorm(y(i),lam(timeindex(i)),sdObs,true);
-   }
-   }
-   return ans;
-   }
+      ans+=-dnorm(y(i),lam(timeindex(i))+bias*biasid(i),sdObs,true);
+    }
+  }
+  return ans;
+}

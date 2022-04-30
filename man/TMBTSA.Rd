@@ -4,12 +4,14 @@
 \alias{TMBTSA}
 \title{Template Model Builder Time Series Analysis}
 \usage{
-TMBTSA(TSM, date)
+TMBTSA(TSM, date, biasid)
 }
 \arguments{
 \item{TSM}{The time series matrix, with dimensions (x/lon,y/lat,timesteps)}
 
 \item{date}{The time axis in the time series (i.e., dates, seconds, intervals)}
+
+\item{biasid}{A struct with the same dimensions as TSM, with integers indicating the bias: 0 for the restrained time series and 1 for the bias. If no bias is present, biasid contains only zeros.}
 }
 \value{
 RW model

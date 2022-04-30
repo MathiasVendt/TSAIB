@@ -159,7 +159,9 @@ where the alpha and the betas are the estimated parameters, and p and t is set t
 ```{r, eval=TRUE, echo=TRUE}
 TSSmodel(TS_area,TSdata$date)
 ```
-
+```{r, eval=TRUE, echo=TRUE}
+TMBTSA(TimeSeriesMatrixBias,TSdata$date,biasid)
+```
 
 # Appendices
 ## Data set used for demonstration of the TSAIB package:
