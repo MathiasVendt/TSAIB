@@ -220,6 +220,102 @@ TSdata
   longitude, latitude and date. (dimension: [67,720,325])
   TSmatrix: containing a 3x3x325 grid of measurements centered around (lon,lat)=(-165,74)
 ```
+TSdata2
+``` r 
+?TSdata2
+ Description
+  An extracted list using the "GridTSExtract" function, from the data set:
+  Rose, S.K.; Andersen, O.B.; Passaro, M.; Ludwigsen, C.A.; Schwatke, 
+  C. Arctic Ocean Sea Level Record from the Complete Radar 
+  Altimetry Era: 1991-2018. Remote Sens. 2019, 11, 1672. 
+  https://www.mdpi.com/2072-4292/11/14/1672
+ Usage
+  TSdata2
+ Format
+  A large list containing 5 elements, which are:
+  longitude: Containing longitudes from -180:180, by increments of 0.5 degrees
+  (length: 720)
+  latitude: Containing latitudes from 65:81.5, by increments of 0.25 degrees (length: 67)
+  date: Containing years from 1991:2019, by increments of 1/12 (length:325)
+  measurements: Containing sea_level_anomaly measurements for each increments of: 
+  longitude, latitude and date. (dimension: [67,720,325])
+  TSmatrix: Containing a 61x61x325 grid of measurements centered around (lon,lat)=(0,73)
+```
+TS_area
+``` r 
+?TS_area
+ Description
+  A time series containing the meaned and NaN removed time series, from using the
+  "TSnanrem" function on "TSdata$TSmatrix"
+ Usage
+  TS_area
+ Format
+  A numerical vector with length: 325
+```
+TimeSeriesMatrixBias
+``` r 
+?TimeSeriesMatrixBias
+ Description
+  A time series matrix with added biases: 1 and -2, on the data: "TSdata$TSmatrix" 
+ Usage
+  TimeSeriesMatrixBias
+ Format
+  A numerical struct with dimensions 3x3x325
+```
+biasid
+``` r 
+?biasid
+ Description
+  A bias index containing bias indicies: 1 and 2, matching the synthetic bias data 
+  "TimeSeriesMatrixBias"
+ Usage
+  biasid
+ Format
+  A numerical struct with dimensions 3x3x325
+```
+TimeSeriesMatrixBiasTMB
+``` r 
+?TimeSeriesMatrixBias
+ Description
+  A time series matrix with added biases: 1, on the data: "TSdata$TSmatrix" 
+ Usage
+  TimeSeriesMatrixBiasTMB
+ Format
+  A numerical struct with dimensions 3x3x325
+```
+biasidTMB
+``` r 
+?biasidTMB
+ Description
+  A bias index containing bias index: 1, matching the synthetic bias data 
+  "TimeSeriesMatrixBiasTMB"
+ Usage
+  biasidTMB
+ Format
+  A numerical struct with dimensions 3x3x325
+```
+DEMOpllam
+``` r 
+?DEMOpllam
+ Description
+  RW model estimates, calculated using the TMBTSA function on "TimeSeriesMatricBiasTMB" 
+  and "biasidTMB"
+ Usage
+  DEMOpllam
+ Format
+  A numerical vector with length: 325
+```
+DEMOplsdlam
+``` r 
+?DEMOplsdlam
+ Description
+  RW model standard deviations, calculated using the "TMBTSA" function on 
+  "TimeSeriesMatricBiasTMB" and "biasidTMB"
+ Usage
+  DEMOplsdlam
+ Format
+  A numerical vector with length: 325
+```
 ## Functions
 GridTSExtract
 ``` r 
@@ -285,8 +381,10 @@ IB
  Arguments
   TSM: The time series struct with the intermission bias
   date: The time axis in the time series (dates, seconds, intervals)
-  biasvec: The vector containging up to 2 different bias. If the data only contains one bias, insert that value instead of the vector
-  biasid: A struct with the same dimensions as TSM, with integers indicating the bias: 0 for the restrained time series, 1 for the first bias and 2 for the second bias.
+  biasvec: The vector containging up to 2 different bias. If the data only contains one7
+  bias, insert that value instead of the vector
+  biasid: A struct with the same dimensions as TSM, with integers indicating the bias: 
+  0 for the restrained time series, 1 for the first bias and 2 for the second bias.
 Value: Time series struct with bias correction
 ```
 TSAplots
@@ -347,13 +445,16 @@ TMBTSA
 ``` r 
 ?TMBTSA
  Description
-  Utilizes TMB, which is a C++ interface for automatic differentiation that implements Laplace's method, to estimate a time series model
+  Utilizes TMB, which is a C++ interface for automatic differentiation that implements
+  the Laplace method, to estimate a time series model
  Usage
   TMBTSA(TSM, date, biasid)
  Arguments
   TSM: The time series struct, with dimensions (x/lon,y/lat,timesteps)
   date: The time axis in the time series (i.e., dates, seconds, intervals) 
-  biasid: A struct with the same dimensions as TSM, with integers indicating the bias: 0 for the restrained time series and 1 for the bias. If no bias is present, biasid contains only zeros.
+  biasid: A struct with the same dimensions as TSM, with integers indicating the bias: 
+  0 for the restrained time series and 1 for the bias. If no bias is present, biasid
+  contains only zeros.
  Value: RW model
 ``` 
 

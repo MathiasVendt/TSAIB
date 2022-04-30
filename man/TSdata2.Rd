@@ -7,11 +7,11 @@
 \format{
 A large list containing 5 elements, which are:
 \describe{
-\item{longitude}{containing longitudes from -180:180, by increments of 0.5 degrees (length: 720)}
-\item{latitude}{containing latitudes from 65:81.5, by increments of 0.25 degrees (length: 67)}
-\item{date}{containing years from 1991:2019, by increments of 1/12 (length:325)}
-\item{measurements}{containing sea_level_anomaly measurements for each increments of: longitude, latitude and date. (dimension: [67,720,325])}
-\item{TSmatrix}{containing a 61x61x325 grid of measurements centered around (lon,lat)=(0,73)}
+\item{longitude}{Containing longitudes from -180:180, by increments of 0.5 degrees (length: 720)}
+\item{latitude}{Containing latitudes from 65:81.5, by increments of 0.25 degrees (length: 67)}
+\item{date}{Containing years from 1991:2019, by increments of 1/12 (length:325)}
+\item{measurements}{Containing sea_level_anomaly measurements for each increments of: longitude, latitude and date. (dimension: [67,720,325])}
+\item{TSmatrix}{Containing a 61x61x325 grid of measurements centered around (lon,lat)=(0,73)}
 }
 }
 \usage{
