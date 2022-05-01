@@ -71,6 +71,9 @@ lines(date[((length(TS)-round(length(TS)/10))+1):length(TS)],forecasting_lower,c
 #       col=c( "red","blue","green"),pch=c(NA,NA,NA),lty=c(2,1,1),
 #       cex=0.8)
 
+legend(date[1],max(forecasting_upper), legend=c("Measurements", "Estimates","Forecast","95% CI"),
+       col=c("black", "red","blue","green"), lty=c(1,1,1,1), cex=0.8)
+
 
 
 

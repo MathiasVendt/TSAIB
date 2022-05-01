@@ -72,5 +72,6 @@ TMBTSA <- function(TSM,date,biasid) {
   lines(date[1:length(plsd$lam)],pl$lam,col="red")
   lines(date[1:length(plsd$lam)],pl$lam+ t.val*plsd$lam,col="green")
   lines(date[1:length(plsd$lam)],pl$lam- t.val*plsd$lam,col="green")
-
+  legend(date[round(2.2*length(date)/3)],min(TS,na.rm = TRUE)/2, legend=c( "Estimates","95% CI"),
+         col=c( "red","green"), lty=c(1,1), cex=0.8)
 }

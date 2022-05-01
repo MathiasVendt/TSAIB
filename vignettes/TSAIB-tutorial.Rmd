@@ -58,6 +58,13 @@ install.packages("ncdf4")
 * ggpub
 * forecast
 
+A special library is also needed, and will be mentioned later in this tutorial
+
+* TMB (Template Model Builder)
+
+Together with a compiler tool, \verb+RTools+. This can be installed by going to
+https://cran.r-project.org/, click on 'Download R for Windows', then 'Rtools', and select the latest version of \verb+RTools+ to download. After downloading has completed run the installer with default settings. 
+
 # Getting started with R
 The section gives a short introduction to R, which is useful to new R users.
 
@@ -187,9 +194,10 @@ The iterative messages from the process has been left out, as it's excessive inf
   lines(TSdata$date,DEMOpllam,col="red")
   lines(TSdata$date,DEMOpllam+ DEMOtval*DEMOplsdlam,col="green")
   lines(TSdata$date,DEMOpllam- DEMOtval*DEMOplsdlam,col="green")
-
+  legend(TSdata$date[round(2.2*length(TSdata$date)/3)],min(TSdata$TSmatrix,na.rm = TRUE)/2, legend=c( "Estimates","95% CI"),
+         col=c( "red","green"), lty=c(1,1), cex=0.8)
 ```
-To compare the estimates with the data without bias,\verb+TSdata$TSmatrix+ is plottet together with the estimates below.
+To compare the estimates with the data without bias, \verb+TSdata$TSmatrix+ is plottet together with the estimates below.
 
 ```{r, eval=TRUE, echo=FALSE}
 plot(TSdata$date,rep(0,length(TSdata$date)),xlab="Date",ylab="Measurement",main='TS without bias + Estimated RW',col="white",ylim = c(min(TSdata$TSmatrix,na.rm = TRUE),max(TSdata$TSmatrix,na.rm = TRUE)))
@@ -201,9 +209,9 @@ for (j in 1:dim(TSdata$TSmatrix)[2]) {
   lines(TSdata$date,DEMOpllam,col="red")
   lines(TSdata$date,DEMOpllam+ DEMOtval*DEMOplsdlam,col="green")
   lines(TSdata$date,DEMOpllam- DEMOtval*DEMOplsdlam,col="green")
-
+  legend(TSdata$date[round(2.2*length(TSdata$date)/3)],min(TSdata$TSmatrix,na.rm = TRUE)/2, legend=c("Measurements", "Estimates","95% CI"),col=c("black", "red","green"), lty=c(1,1,1), cex=0.8)
 ```
-The green lines illustrate the 95% CI, and since the standard deviations from !!!!!!
+\verb+TMBTSA+ assumes the data to be independent and uncorrelated, and since the test data used in this example is satellite measurements of a certain area, there might be spacial correlation between the observations per time stamp. This impacts the calculation for the standard deviation, and it is can be seen in the figures, where the 95% CI lies extremely close to the estimates, making the estimates hard to distinguish from the CI.  
 
 # Conclusion
 

@@ -87,7 +87,7 @@ lines(date[1:length(TS)],pred_up_full,col="green")
 lines(date[1:length(TS)],pred_low_full,col="green")
 lines(date[(end(TS)[1]-testsize+1):end(TS)[1]],pred_up,col="green")
 lines(date[(end(TS)[1]-testsize+1):end(TS)[1]],pred_low,col="green")
-legend(date[1],0.09, legend=c("Measurements", "Estimates","Confidence int."),
+legend(date[1],max(TS), legend=c("Measurements", "Estimates","95% CI"),
        col=c("black", "red","green"), lty=c(1,1,1), cex=0.8)
 
 
