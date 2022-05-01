@@ -6,9 +6,10 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-R package to analyse, estimate time series models, and account for
-intermission bias of satellite observations. Input file type: NetCDF
-(Network Common Data Form).
+R package to analyse, estimate time series models and account for
+intermission bias of satellite observations.
+
+Input file type: NetCDF (Network Common Data Form).
 
 This package needs to be installed. Follow this link for the
 installation guide: :<https://github.com/kaskr/adcomp>

@@ -18,11 +18,12 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-R package to analyse, estimate time series models, and 
+R package to analyse, estimate time series models and 
 account for intermission bias of satellite observations.
+
 Input file type: NetCDF (Network Common Data Form).
 
-This package needs \verb+TMB+ to be installed. Follow this link for the installation guide for \verb+TMB+:https://github.com/kaskr/adcomp
+This package needs \verb+TMB+ to be installed. Follow this link for the installation guide: \verb+TMB+:https://github.com/kaskr/adcomp
 
 In order to install \verb+TSAIB+ from GitHub, write the following into the console of R studio:
 
@@ -30,4 +31,3 @@ In order to install \verb+TSAIB+ from GitHub, write the following into the conso
 library(remotes)
 install_github("MathiasVendt/TSAIB")
 ```
-## Data set used for demonstration of the TSAIB package:
