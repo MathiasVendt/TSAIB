@@ -109,7 +109,7 @@ library(TSAIB)
 This section gives a step by step guide on how to utilize the package for analyzing the data, and the order in which the functions are used are recommended.
 
 ## Load data 
-The test data set is called \verb+TSdata+, and is included when the package is downloaded. When the TSAIB library is loaded, info about the data set can be found by the command:
+The test data are included when the package is downloaded. When the TSAIB library is loaded, info about the data set can be found by the command, and in order to get information about the data set \verb+TSdata+, simply write: 
 
 ```{r , eval=FALSE,echo=TRUE}
 ?TSdata
@@ -120,12 +120,12 @@ In order to load the data into the R environment, the data set is assigned a nam
 TSdata=TSdata
 ```
 
-The included data "TSdata" is a list containing 5 elements: Longitudes, latitudes, dates, measurements and a 3x3x325 construct, containing 325 measurements from a 3x3 data point grid. The data is extracted with the \verb+GridTSExtract+ function from the TSAIB library, and is done as:
+The included data \verb+TSdata+ is a list containing 5 elements: Longitudes, latitudes, dates, measurements and a 3x3x325 construct, containing 325 measurements from a 3x3 data point grid. The data is extracted with the \verb+GridTSExtract+ function from the \verb+TSAIB+ library, and is extracted as:
 ```{r, eval=FALSE, echo=TRUE}
 TSdata=GridTSExtract(nco)
 ```
 
-Where \verb+nco+ is the NetCDF data from which TSdata is extracted, and documentation on the data is listed in the Data appendix. 
+Where \verb+nco+ is the NetCDF data from which \verb+TSdata+ is extracted, and documentation on the data is listed in the Data appendix. 
 
 The user can also import their own data from a NetCDF file using the \verb+GridTSExtract+ function, and more info on how to use the function on a specific NetCDF file is shown by:
 ```{r, eval=FALSE, echo=TRUE}
@@ -143,7 +143,7 @@ TSnanrem(TSdata$TSmatrix, method = "mean")
 ```
 
 ## Intermission bias correction
-Some times, the data consists of measurements from different satellite missions, and these measurements will have different biases and need to be aligned. This calls for correction of intermission biases, and if the bias is known, it can be accounted for using the \verb+IB+ function. The input to this function is a time series struct \verb+TSM+, a date vector, a bias vector containing up to two different biases \verb+c(bias1,bias2)+ and lastly, a bias index struct, with the same dimensions as \verb+TSM+, containing zeros for the restrained time series, and integers 1 & 2, for bias1 and bias2 respectively. In the following example, the same 3x3x325 time series as used before, has been added a bias of \verb+c(1,-2)+, and is called \verb+TimeSeriesMatrixBias+, with the corresponding bias index struct \verb+biasid+.
+Some times, the data consists of measurements from different satellite missions, and these measurements will have different biases and needs to be aligned. This calls for correction of intermission biases, and if the bias is known, it can be accounted for using the \verb+IB+ function. The input to this function is a time series struct \verb+TSM+, a date vector, a bias vector containing up to two different biases \verb+c(bias1,bias2)+ and lastly, a bias index struct, with the same dimensions as \verb+TSM+, containing zeros for the restrained time series, and integers 1 & 2, for bias1 and bias2 respectively. In the following example, the same 3x3x325 time series as used before, has been added a bias of \verb+c(1,-2)+, and is called \verb+TimeSeriesMatrixBias+, with the corresponding bias index struct \verb+biasid+.
 ```{r, eval=TRUE, echo=TRUE}
 IB(TimeSeriesMatrixBias,TSdata$date,c(1,-2),biasid)
 ```
@@ -171,11 +171,11 @@ ARIMAbuilder(TS_area,TSdata$date,3,1,1,1,1,1,12)
 It is seen that ARIMA(3,1,1)x(1,1,1)_12 is on third place, ARIMA(2,1,1)x(1,1,1)_12 is on second place, and the best model based on BIC is: ARIMA(1,1,1)x(1,1,1)_12, and that is shown in the figure above. \verb+ARIMAbuilder+ also takes the last 10% of the observations, and uses it as test data, on which it forecasts the remaining 10% together with a 95% CI for the forecastet predictions. 
 
 ## Simple time series model estimation, using OLS
-The function \verb+TSSmodel+ estimates a simple model of the form:
+The function \verb+TSSmodel+ uses Ordinary Least Squares (OLS) to estimate a simple model of the form:
 \begin{eqnarray}
 Y_t=\alpha+\beta_tt+\beta_s\sin(\frac{2\pi}{p}t)+\beta_c\cos(\frac{2\pi}{p}t)
 \end{eqnarray}
-where the alpha and the betas are the estimated parameters, and p and t is set to 12 and 1 respectively by default:
+where the alpha and the betas are the estimated parameters, and the period (p) and timestep (t) is set to 12 and 1 respectively by default:
 ```{r, eval=TRUE, echo=TRUE}
 TSSmodel(TS_area,TSdata$date)
 ```
@@ -238,11 +238,11 @@ The functions, unless described otherwise, are sensitive to NaN values, for whic
 
 For the R functions that are demonstrated using the \verb+TS_area+ data set, only a vector of time series data can be used as input, where a more advanced function could take into account a grid of values for each time step, as it is done in the \verb+TMBTSA+ function.
 
-The \verb+ARIMAbuilder+ function can take any range of parameters as input, and if the range is set too high, and there aren't enough restrained parameters, the processing of this function can be very time consuming, and if the user isn't careful, this process could uptake all the computer's memory. An improvement on this would be a security measure which halts the process if this limit is approaching. 
+The \verb+ARIMAbuilder+ function can take any range of parameters as input, and if the range is set too high, and there aren't enough range-restrained parameters, the processing of this function can be very time consuming, and if the user isn't careful, this process could uptake all the computer's memory. An improvement on this would be a security measure which halts the process if this limit is approaching. 
 
 \verb+TSSmodel+ estimates a very simple and specific model, and it was seen that the simple sinus and cosinus terms wasn't matching the data very well. This function could be further developed featuring a number of different simple linear models, from which the user could choose the most adequate.
 
-The implementation of \verb+TMB+ in the \verb+TMBTSA+ function is very sparse compared to the enormous potential and amount of tools \verb+TMB+ has to offer. The function could have several different tools combined into the function, form which the user would be able to choose one of these. The wrong calculation of the standard deviation when the function is used on a grid of data per time stamp, could also be fixed, so that the function would take correlation of the data points into account. It also complicates the use of \verb+TSAIB+ a little by having to install \verb+TMB+ prior to \verb+TSAIB+, but compared to the possibilities of using \verb+TMB+, this is a relatively small price to pay. 
+The implementation of \verb+TMB+ in the \verb+TMBTSA+ function is very sparse compared to the enormous potential and amount of tools \verb+TMB+ has to offer. The function could have several different tools combined into the function, from which the user would be able to choose one of these. The function doesn't take correlated data into account, resulting in wrong calculations of the standard deviation if the data is correlated. The wrong calculation of the standard deviation when the function is used on a grid of correlated data per time stamp, could also be fixed, so that the function would take correlation of the data points into account. It also complicates the use of \verb+TSAIB+ by having to install \verb+TMB+ prior to \verb+TSAIB+, but compared to the possibilities of using \verb+TMB+, this is a relatively small price to pay. 
 
 All in all \verb+TSAIB+ provides a simple overview, and relatively simple-to-use functions for estimating time series models on satellite data of sea-level anomalies provided in this package, but the functions could be developed to be more versatile, robust and user friendly when used on other data. 
 
