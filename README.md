@@ -21,3 +21,10 @@ console of R studio:
 library(remotes)
 install_github("MathiasVendt/TSAIB")
 ```
+
+Or by using the devtools package as so:
+
+``` r
+install.packages('devtools')
+devtools::install_github("MathiasVendt/TSAIB")
+```

@@ -31,3 +31,10 @@ In order to install TSAIB from GitHub, write the following into the console of R
 library(remotes)
 install_github("MathiasVendt/TSAIB")
 ```
+
+Or by using the devtools package as so:
+
+``` r
+install.packages('devtools')
+devtools::install_github("MathiasVendt/TSAIB")
+```

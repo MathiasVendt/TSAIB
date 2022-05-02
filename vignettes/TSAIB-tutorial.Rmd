@@ -28,7 +28,7 @@ knitr::opts_chunk$set(
 
 \newpage
 # Preface
-The software package TSAIB was developed as the main deliverable for a synthesis project regarding the study-line: Earth and Space Physics and Engineering, with a specialization in Earth Observation.
+The software package TSAIB was developed as the main deliverable for a synthesis project regarding the study-line: Earth and Space Physics and Engineering, with a specialization in Earth Observation, at DTU.
 
 # Installation
 The software is implemented in the open source language "R" which can be found at https://www.r-project.org/. The source code to the "R" software package TSAIB is located at GitHub at https://github.com/MathiasVendt/TSAIB
@@ -45,6 +45,19 @@ install.packages('devtools')
 ```{r install2,echo=TRUE, eval=FALSE}
 devtools::install_github("MathiasVendt/TSAIB")
 ```
+
+Or by using the \verb+remotes+ library like this:
+
+1. Open R
+2. Load in \verb+remotes+ library
+```{r install3,echo=TRUE, eval=FALSE}
+library(remotes)
+```
+3. Install the TSAIB package 
+```{r install4,echo=TRUE, eval=FALSE}
+install_github("MathiasVendt/TSAIB")
+```
+
 
 ## Dependencies
 The packages depends on the following R libraries which can be installed from R with the function \verb+install.packages+. Hence, to install the package "ncdf4"use the following command for the R window:
