@@ -28,7 +28,7 @@ knitr::opts_chunk$set(
 
 \newpage
 # Preface
-The software package TSAIB was developed as the main deliverable for a synthesis project regarding the study-line: Earth and Space Physics and Engineering, with a specialization in Earth Observation, at DTU.
+The software package TSAIB was developed as the main deliverable for a synthesis project regarding the study-line: Earth and Space Physics and Engineering, with a specialization in Earth Observation, at the Technical University of Denmark.
 
 # Installation
 The software is implemented in the open source language "R" which can be found at https://www.r-project.org/. The source code to the "R" software package TSAIB is located at GitHub at https://github.com/MathiasVendt/TSAIB
@@ -164,11 +164,11 @@ From the time series analysis functions, some indications of adequate parameter 
 \begin{eqnarray}
 \text{BIC}=N\text{log}\hat{\sigma}^2_\epsilon+\text{log}(N)(p+q+P+Q+d+D)
 \end{eqnarray}
-with $N$ being the number of observations in the data set. By default, all parameters are set to 1, with seasonality set to 12 (i.e.: ARIMA(1,1,1)x(1,1,1)_12). For this example, however, the reasonable parameter guesses from \verb+TSAplots+ are used: ARIMA(p=3,d=1,q=?)x(P=?,D=?,Q=?)_S=12. Estimating ARIMA models is not an exact science, and ACF and PACF plots on real time series data is sometimes ambiguous. Hence the missing parameters are to be set to a reasonable guess of the maximum parameter value. The higher the parameter range, the more processing is needed to run \verb+ARIMAbuilder+. To make the processing relatively fast, the remaining parameter estimates are set to 1: ARIMA(3,1,1,1,1,1)_12
+with $N$ being the number of observations in the data set. By default, all parameters are set to 1, with seasonality set to 12 (i.e.: ARIMA(1,1,1)x(1,1,1)_12). For this example, however, the reasonable parameter guesses from \verb+TSAplots+ are used: ARIMA(p=3,d=1,q=?)x(P=?,D=?,Q=?)_S=12. Estimating ARIMA models is not an exact science, and ACF and PACF plots on real time series data is sometimes ambiguous. Hence the missing parameters are to be set to a reasonable guess of the maximum parameter value. The higher the parameter range, the more processing is needed to run \verb+ARIMAbuilder+. To make the processing relatively fast, the remaining parameter estimates are set to 1: ARIMA(3,1,1,1,1,1)_12. Below is shown the iterations of model variations that has been evaluated, followed by a plot of the estimated best model on top of the measurements, and lastly a list of the top 5 best estimated ARIMA models:
 ```{r, eval=TRUE, echo=TRUE}
 ARIMAbuilder(TS_area,TSdata$date,3,1,1,1,1,1,12)
 ```
-It is seen that ARIMA(3,1,1)x(1,1,1)_12 is on third place, ARIMA(2,1,1)x(1,1,1)_12 is on second place, and the best model based on BIC is: ARIMA(1,1,1)x(1,1,1)_12, and that is shown in the figure above. 
+It is seen that ARIMA(3,1,1)x(1,1,1)_12 is on third place, ARIMA(2,1,1)x(1,1,1)_12 is on second place, and the best model based on BIC is: ARIMA(1,1,1)x(1,1,1)_12, and that is shown in the figure above. \verb+ARIMAbuilder+ also takes the last 10% of the observations, and uses it as test data, on which it forecasts the remaining 10% together with a 95% CI for the forecastet predictions. 
 
 ## Simple time series model estimation, using OLS
 The function \verb+TSSmodel+ estimates a simple model of the form:
@@ -224,11 +224,27 @@ for (j in 1:dim(TSdata$TSmatrix)[2]) {
   lines(TSdata$date,DEMOpllam- DEMOtval*DEMOplsdlam,col="green")
   legend(TSdata$date[round(2.2*length(TSdata$date)/3)],min(TSdata$TSmatrix,na.rm = TRUE)/2, legend=c("Measurements", "Estimates","95% CI"),col=c("black", "red","green"), lty=c(1,1,1), cex=0.8)
 ```
-\verb+TMBTSA+ assumes the data to be independent and uncorrelated, and since the test data used in this example is satellite measurements of a certain area, there might be spacial correlation between the observations per time stamp. This impacts the calculation for the standard deviation, and it is can be seen in the figures, where the 95% CI lies extremely close to the estimates, making the estimates hard to distinguish from the CI.  
+\verb+TMBTSA+ assumes the data to be independent and uncorrelated, and since the test data used in this example is satellite measurements of a certain area, there might be spacial correlation between the observations per time stamp. This impacts the calculation of the standard deviation, as the function interprets this as if it has more information about the data than it actually has, and it can be seen in the figures above, where the 95% CI lies extremely close to the estimates, making the estimates hard to distinguish from the CI.  
 
 # Conclusion
+This tutorial has presented the R package \verb+TSAIB+, as well as demonstrated how to install, load, and utilize the inbuilt functions on a specific data set of satellite measurements of sea-level anomalies in the arctic ocean. \verb+GridTSExtract was used to extract the \verb+nco+ object from a NetCDF file. Basic statistical insights was achieved through the \verb+TSdiagnostics+ function, on a meaned area of interest called \verb+TS_area+. To manipulate NaN values in the data, a function was introduced to deal with this called \verb+TSnanrem+. If the data contained known intermission bias, the function  \verb+IB+ could correct the data for up to two different biases, which was demonstrated on synthetic biased data called \verb+TimeSeriesMatrixBias+, with the matching bias struct \verb+biasid+. The ACF and PACF of \verb+TS_area+ was plottet for the raw data, as well as for the differenced time series, through the \verb+TSAplots+ function, from which it was demonstrated how to estimate a few ARIMA parameters. 
+
+The next stage was "Model Estimation", where the \verb+ARIMAbuilder+ function was presented, and it was demonstrated how the parameter estimates from \verb+TSAplots+ could be used to restrain some of the ARIMA(p,d,q)x(P,D,Q)_S parameters, in order for the function to iteratively scan through qualitative parameter ranges, and point out the top 5 best models, and plot the best of all the possible ARIMA models based upon the BIC. Another introduced model estimation function was \verb+TSSmodel+, which estimates a simple time series model using OLS, with an intercept, a trend, a sinus and a cosinus term, and was also demonstrated on the \verb+TS_area+ data. Lastly, the \verb+TMBTSA+ function was demonstrated, which utilizes TMB, a C++ interface, to estimate a RW model, take care of NaN, and also account for one intermission bias all at once. This was done on synthetic data containing NaN and one intermission bias called \verb+TimeSeriesMatrixBiasTMB+ with the corresponding bias struct called \verb+biasidTMB+.   
 
 # Discussion
+\verb+TSAIB+ successfully implements analysis and model estimation functions on the specific data set provided. It is not certain that the data from a NetCDF file is structured the same way, and in order to match with other data sets than what is provided in the package, the user is required to have some basic knowledge of how to manipulate the data in R in order for it to fit the functions used in \verb+TSAIB+.
+
+The functions, unless described otherwise, are sensitive to NaN values, for which an extra function is provided to take care of this before inserting the data into the functions. This could be implementet in more advanced functions, so that pre-processing of the data isn't necessary.
+
+For the R functions that are demonstrated using the \verb+TS_area+ data set, only a vector of time series data can be used as input, where a more advanced function could take into account a grid of values for each time step, as it is done in the \verb+TMBTSA+ function.
+
+The \verb+ARIMAbuilder+ function can take any range of parameters as input, and if the range is set too high, and there aren't enough restrained parameters, the processing of this function can be very time consuming, and if the user isn't careful, this process could uptake all the computer's memory. An improvement on this would be a security measure which halts the process if this limit is approaching. 
+
+\verb+TSSmodel+ estimates a very simple and specific model, and it was seen that the simple sinus and cosinus terms wasn't matching the data very well. This function could be further developed featuring a number of different simple linear models, from which the user could choose the most adequate.
+
+The implementation of \verb+TMB+ in the \verb+TMBTSA+ function is very sparse compared to the enormous potential and amount of tools \verb+TMB+ has to offer. The function could have several different tools combined into the function, form which the user would be able to choose one of these. The wrong calculation of the standard deviation when the function is used on a grid of data per time stamp, could also be fixed, so that the function would take correlation of the data points into account. It also complicates the use of \verb+TSAIB+ a little by having to install \verb+TMB+ prior to \verb+TSAIB+, but compared to the possibilities of using \verb+TMB+, this is a relatively small price to pay. 
+
+All in all \verb+TSAIB+ provides a simple overview, and relatively simple-to-use functions for estimating time series models on satellite data of sea-level anomalies provided in this package, but the functions could be developed to be more versatile, robust and user friendly when used on other data. 
 
 # Appendices
 ## Data set used for demonstration of the TSAIB package:
@@ -387,7 +403,8 @@ GridTSExtract(
   radius: The square radius of the TS grid. e.g: 0=1x1 grid, 1=3x3 grid, 2=5x5 grid etc.
   dlon: Number of data points for each degree longitude
   dlat:Number of data points for each degree latitude
- Value: Time series from grid
+ Value
+  Time series from grid
 ```
 TSdiagnostics
 ``` r 
@@ -399,7 +416,8 @@ TSdiagnostics
  Arguments
   TS:The time series to be analyzed
   nanrem: Set NaN to be removed or not. e.g.: nanrem="TRUE"
- Value: Basic statistics and characteristics
+ Value
+  Basic statistics and characteristics
 ``` 
 TSnanrem
 ``` r 
@@ -412,7 +430,8 @@ TSnanrem
   TS: The time series to remove NaN from
   method: The imputation method. e.g.: "omit", "mean", "median" or "value"
   value_nr: The specific value for the "value" imputing method. e.g.: value_nr=0
- Value: Time series with NaNs removed or replaced
+ Value
+  Time series with NaNs removed or replaced
 ```
 IB
 ``` r 
@@ -428,7 +447,8 @@ IB
   bias, insert that value instead of the vector
   biasid: A struct with the same dimensions as TSM, with integers indicating the bias: 
   0 for the restrained time series, 1 for the first bias and 2 for the second bias.
-Value: Time series struct with bias correction
+Value
+  Time series struct with bias correction
 ```
 TSAplots
 ``` r 
@@ -446,7 +466,8 @@ TSAplots
   saveas: specifies the file format to save the plots in the current working directory. 
   Possible formats is: PDF, JPEG, TIFF, BMP and PNG. e.g.: "pdf" or "jpeg". 
   If no format is specified, it will not save the plots
- Value: Plots from TSAplots
+ Value
+  Plots from TSAplots
 ``` 
 TSSmodel
 ``` r 
@@ -462,7 +483,8 @@ TSSmodel
   p: The period. e.g.: p=12, for 12 months in a year
   t: The time steps. e.g.: t=1, for monthly time steps, with period 12
   testsize:	The number of data points to be used for testing the model
- Value: Simple TS model
+ Value
+  Simple TS model
 ``` 
 ARIMAbuilder
 ``` r 
@@ -477,12 +499,13 @@ ARIMAbuilder
   using this function!)
   p: The maximum AR value, estimated from plot analysis
   d: The fixed differencing, often 0, 1 or 2
-  q:	The maximum MA value, estimated from plot analysis
-  P:	The maximum seasonal AR value, estimated from plot analysis
-  D:	The fixed seasonal differencing, often 0, 1 or 2
-  Q:	The maximum seasonal MA value, estimated from plot analysis
-  S:	The seasonality/period of the seasonal differencing
- Value: list of top 5 ARIMA/SARIMA models
+  q: The maximum MA value, estimated from plot analysis
+  P: The maximum seasonal AR value, estimated from plot analysis
+  D: The fixed seasonal differencing, often 0, 1 or 2
+  Q: The maximum seasonal MA value, estimated from plot analysis
+  S: The seasonality/period of the seasonal differencing
+ Value
+  List of top 5 ARIMA/SARIMA models
 ``` 
 TMBTSA
 ``` r 
@@ -498,7 +521,8 @@ TMBTSA
   biasid: A struct with the same dimensions as TSM, with integers indicating the bias: 
   0 for the restrained time series and 1 for the bias. If no bias is present, biasid
   contains only zeros.
- Value: RW model
+ Value
+  RW model
 ``` 
 
 # References 
