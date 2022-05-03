@@ -132,7 +132,7 @@ The user can also import their own data from a NetCDF file using the \verb+GridT
 ?GridTSExtract
 ```
 ## Gather simple statistics about the data 
-It is now desired to get a brief overview of the data, including statistics, distributions and plotting. This can be achieved using the \verb+TSdiagnostics+ function. For this example, a meaned 30 point grid area (\verb+TS_area+) is analyzed, which is centered around (lon,lat)=(0,73.25). To access sub elements of a construct in R, use \verb+$+ as a seperator between the parent object, and it's sub-directory. The function wont work for NaN elements, and if the extracted data contains a few of those, the \verb+nanrem+ option in the \verb+TSdiagnostics+ function is set to \verb+"TRUE"+, which will omit any NaN elements for the analysis.
+It is now desired to get a brief overview of the data, including statistics, distributions and plotting. This can be achieved using the \verb+TSdiagnostics+ function. For this example, a meaned 30 point radius grid area (\verb+TS_area+) is analyzed, which is centered around (lon,lat)=(0,73.25). To access sub elements of a construct in R, use \verb+$+ as a seperator between the parent object, and it's sub-directory. The function wont work for NaN elements, and if the extracted data contains a few of those, the \verb+nanrem+ option in the \verb+TSdiagnostics+ function is set to \verb+"TRUE"+, which will omit any NaN elements for the analysis.
 ```{r, eval=TRUE, echo=TRUE}
 TSdiagnostics(TS_area)
 ```
